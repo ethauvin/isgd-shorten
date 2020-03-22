@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <Blacklist></Blacklist>
+  <Whitelist>
+    <ID>LongParameterList:Isgd.kt$Isgd.Companion$( url: String, shorturl: String = "", callback: String = "", logstats: Boolean = false, format: Format = Format.SIMPLE, isVgd: Boolean = false )</ID>
+  </Whitelist>
+</SmellBaseline>
