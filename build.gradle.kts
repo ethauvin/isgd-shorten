@@ -69,7 +69,7 @@ detekt {
 }
 
 jacoco {
-    toolVersion = "0.8.3"
+    toolVersion = "0.8.5"
 }
 
 sonarqube {
