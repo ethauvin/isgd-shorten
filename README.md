@@ -1,7 +1,7 @@
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)  
 [![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/isgd-shorten/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/isgd-shorten?targetFile=pom.xml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten) [![Build Status](https://travis-ci.com/ethauvin/isgd-shorten.svg?branch=master)](https://travis-ci.com/ethauvin/isgd-shorten) [![CircleCI](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master)
 
-# [is.gd](https://is.gd/developers.php) Shortener for Kotlin/Java.
+# [is.gd](https://is.gd/developers.php) Shortener for Kotlin/Java
 
 A simple implementation of the [is.gd API](https://is.gd/developers.php).
 
@@ -27,10 +27,11 @@ The [is.gd API](https://is.gd/developers.php) can return data in plain text (def
 ```kotlin
 Isgd.shorten("https://www.example.com/", format = Format.JSON)
 ```
+
+returns:
+
 ```json
-{
-    "shorturl": "https://is.gd/Pt2sET"
-}
+{ "shorturl": "https://is.gd/Pt2sET" }
 ```
 
 ### Parameters
@@ -40,10 +41,10 @@ All of the [is.gd API](https://is.gd/developers.php) parameters are supported:
 ```kotlin
 Isgd.shorten(url = url, shorturl="foobar", callback = "test", logstats = true, format = Format.JSON)
 ```
+returns:
+
 ```json
-{
-    "shorturl": "https://is.gd/foobar"
-}
+test({ "shorturl": "https://is.gd/foobar" });
 ```
 
 ### v.gd
