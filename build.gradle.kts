@@ -9,12 +9,12 @@ plugins {
     `java-library`
     `maven-publish`
     id("com.github.ben-manes.versions") version "0.28.0"
-    id("com.jfrog.bintray") version "1.8.4"
-    id("io.gitlab.arturbosch.detekt") version "1.7.0-beta2"
+    id("com.jfrog.bintray") version "1.8.5"
+    id("io.gitlab.arturbosch.detekt") version "1.7.4"
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
     id("org.jetbrains.dokka") version "0.10.1"
-    id("org.jetbrains.kotlin.jvm") version "1.3.70"
-    id("org.jetbrains.kotlin.kapt") version "1.3.70"
+    id("org.jetbrains.kotlin.jvm") version "1.3.72"
+    id("org.jetbrains.kotlin.kapt") version "1.3.72"
     id("org.sonarqube") version "2.8"
 }
 
