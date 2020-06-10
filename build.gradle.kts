@@ -1,6 +1,7 @@
 import com.jfrog.bintray.gradle.tasks.BintrayUploadTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.FileInputStream
+import java.util.Date
 import java.util.Properties
 
 plugins {
@@ -9,12 +10,12 @@ plugins {
     `maven-publish`
     id("com.github.ben-manes.versions") version "0.28.0"
     id("com.jfrog.bintray") version "1.8.5"
-    id("io.gitlab.arturbosch.detekt") version "1.8.0"
+    id("io.gitlab.arturbosch.detekt") version "1.9.1"
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
     id("org.jetbrains.dokka") version "0.10.1"
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
     id("org.jetbrains.kotlin.kapt") version "1.3.72"
-    id("org.sonarqube") version "2.8"
+    id("org.sonarqube") version "3.0"
 }
 
 group = "net.thauvin.erik"
@@ -130,8 +131,29 @@ tasks {
         into(deployDir)
     }
 
+    val gitIsDirty by registering(Exec::class) {
+        description = "Fails if git has uncommitted changes."
+        group = "verification"
+        commandLine("git", "diff", "--quiet", "--exit-code")
+    }
+
+    val gitTag by registering(Exec::class) {
+        description = "Tags the local repository with version ${project.version}"
+        group = PublishingPlugin.PUBLISH_TASK_GROUP
+        dependsOn(gitIsDirty)
+        if (isRelease) {
+            commandLine("git", "tag", "-a", project.version, "-m", "Version ${project.version}")
+        }
+    }
+
     val bintrayUpload by existing(BintrayUploadTask::class) {
-        dependsOn(publishToMavenLocal)
+        dependsOn(publishToMavenLocal, gitTag)
+        doFirst {
+            versionName = "${project.version}"
+            versionDesc = "${project.name} ${project.version}"
+            versionVcsTag = "${project.version}"
+            versionReleased = Date().toString()
+        }
     }
 
     register("deploy") {
@@ -182,6 +204,7 @@ bintray {
             "shorturl",
             "url-shortener"
         )
+        setLicenses("BSD 3-Clause")
         publicDownloadNumbers = true
         version.apply {
             name = project.version as String
