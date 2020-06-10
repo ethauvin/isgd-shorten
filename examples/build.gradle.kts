@@ -16,7 +16,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("net.thauvin.erik:isgd-shorten:0.9.0-beta")
+    implementation("net.thauvin.erik:isgd-shorten:0.9.1")
 }
 
 application {
