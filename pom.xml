@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.thauvin.erik</groupId>
   <artifactId>isgd-shorten</artifactId>
-  <version>0.9.0-beta</version>
+  <version>0.9.1</version>
   <dependencyManagement>
     <dependencies>
       <dependency>
