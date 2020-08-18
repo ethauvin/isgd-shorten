@@ -1,20 +1,19 @@
 import com.jfrog.bintray.gradle.tasks.BintrayUploadTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.FileInputStream
-import java.util.Date
-import java.util.Properties
+import java.util.*
 
 plugins {
     jacoco
     `java-library`
     `maven-publish`
-    id("com.github.ben-manes.versions") version "0.28.0"
+    id("com.github.ben-manes.versions") version "0.29.0"
     id("com.jfrog.bintray") version "1.8.5"
-    id("io.gitlab.arturbosch.detekt") version "1.9.1"
+    id("io.gitlab.arturbosch.detekt") version "1.11.0"
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
-    id("org.jetbrains.dokka") version "0.10.1"
-    id("org.jetbrains.kotlin.jvm") version "1.3.72"
-    id("org.jetbrains.kotlin.kapt") version "1.3.72"
+    id("org.jetbrains.dokka") version "1.4.0-rc"
+    id("org.jetbrains.kotlin.jvm") version "1.4.0"
+    id("org.jetbrains.kotlin.kapt") version "1.4.0"
     id("org.sonarqube") version "3.0"
 }
 
@@ -49,11 +48,6 @@ repositories {
 }
 
 dependencies {
-    // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 }
@@ -70,7 +64,7 @@ java {
 }
 
 detekt {
-    baseline = project.rootDir.resolve("detekt-baseline.xml")
+    baseline = project.rootDir.resolve("config/detekt/baseline.xml")
 }
 
 jacoco {
@@ -90,8 +84,8 @@ val sourcesJar by tasks.creating(Jar::class) {
 }
 
 val javadocJar by tasks.creating(Jar::class) {
-    dependsOn(tasks.dokka)
-    from(tasks.dokka)
+    dependsOn(tasks.dokkaJavadoc)
+    from(tasks.dokkaJavadoc)
     archiveClassifier.set("javadoc")
     description = "Assembles a JAR of the generated Javadoc."
     group = JavaBasePlugin.DOCUMENTATION_GROUP
@@ -192,6 +186,7 @@ bintray {
         githubReleaseNotesFile = "README.md"
         vcsUrl = "$mavenUrl.git"
         setLabels(
+            "android",
             "is.gd",
             "v.gd",
             "java",

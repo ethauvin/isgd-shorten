@@ -2,7 +2,7 @@
 
 [![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/isgd-shorten/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/isgd-shorten?targetFile=pom.xml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten) [![Build Status](https://travis-ci.com/ethauvin/isgd-shorten.svg?branch=master)](https://travis-ci.com/ethauvin/isgd-shorten) [![CircleCI](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master)
 
-# [is.gd](https://is.gd/developers.php) Shortener for Kotlin/Java
+# [is.gd](https://is.gd/developers.php) Shortener for Kotlin/Java/Android
 
 A simple implementation of the [is.gd API](https://is.gd/developers.php).
 
@@ -60,6 +60,7 @@ dependencies {
     implementation("net.thauvin.erik:isgd-shorten:0.9.1")
 }
 ```
+Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://search.maven.org/artifact/net.thauvin.erik/isgd-shorten/0.9.1/jar).
 
 ### v.gd
 
