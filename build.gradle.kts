@@ -1,6 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.FileInputStream
-import java.util.*
 
 plugins {
     jacoco
@@ -11,8 +9,8 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.16.0"
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
     id("org.jetbrains.dokka") version "1.4.30"
-    id("org.jetbrains.kotlin.jvm") version "1.4.30"
-    id("org.jetbrains.kotlin.kapt") version "1.4.30"
+    id("org.jetbrains.kotlin.jvm") version "1.4.31"
+    id("org.jetbrains.kotlin.kapt") version "1.4.31"
     id("org.sonarqube") version "3.1.1"
 }
 
@@ -28,22 +26,9 @@ val publicationName = "mavenJava"
 
 var semverProcessor = "net.thauvin.erik:semver:1.2.0"
 
-// Load local.properties
-File("local.properties").apply {
-    if (exists()) {
-        FileInputStream(this).use { fis ->
-            Properties().apply {
-                load(fis)
-                forEach { (k, v) ->
-                    extra[k as String] = v
-                }
-            }
-        }
-    }
-}
-
 repositories {
     mavenCentral()
+    jcenter() // needed for dokka
 }
 
 dependencies {
