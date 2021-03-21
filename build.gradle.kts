@@ -44,7 +44,6 @@ File("local.properties").apply {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
