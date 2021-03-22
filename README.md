@@ -52,15 +52,11 @@ test({ "shorturl": "https://is.gd/foobar" });
 To use with [Gradle](https://gradle.org/), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/build.gradle.kts) file:
 
 ```gradle
-repositories {
-    jcenter()
-}
-
 dependencies {
-    implementation("net.thauvin.erik:isgd-shorten:0.9.1")
+    implementation("net.thauvin.erik:isgd-shorten:0.9.2")
 }
 ```
-Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://search.maven.org/artifact/net.thauvin.erik/isgd-shorten/0.9.1/jar).
+Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://search.maven.org/artifact/net.thauvin.erik/isgd-shorten/0.9.2/jar).
 
 ### v.gd
 
