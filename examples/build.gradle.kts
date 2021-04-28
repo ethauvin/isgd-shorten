@@ -1,10 +1,10 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.4.30"
+    id("org.jetbrains.kotlin.jvm") version "1.5.0"
     id("com.github.ben-manes.versions") version "0.38.0"
     application
 }
 
-// ./gradlew run --args='https://wwwcom.example. https://is.gd/Pt2sET'
+// ./gradlew run --args='https://www.example.com https://is.gd/Pt2sET'
 // ./gradlew runJava --args='https://www.example.com https://is.gd/Pt2sET'
 
 repositories {
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.thauvin.erik:isgd-shorten:0.9.1")
+    implementation("net.thauvin.erik:isgd-shorten:0.9.2")
 }
 
 application {

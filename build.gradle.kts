@@ -8,9 +8,9 @@ plugins {
     id("com.github.ben-manes.versions") version "0.38.0"
     id("io.gitlab.arturbosch.detekt") version "1.16.0"
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
-    id("org.jetbrains.dokka") version "1.4.30"
-    id("org.jetbrains.kotlin.jvm") version "1.4.31"
-    id("org.jetbrains.kotlin.kapt") version "1.4.31"
+    id("org.jetbrains.dokka") version "1.4.32"
+    id("org.jetbrains.kotlin.jvm") version "1.5.0"
+    id("org.jetbrains.kotlin.kapt") version "1.5.0"
     id("org.sonarqube") version "3.1.1"
 }
 
@@ -28,7 +28,6 @@ var semverProcessor = "net.thauvin.erik:semver:1.2.0"
 
 repositories {
     mavenCentral()
-    jcenter() // needed for dokka
 }
 
 dependencies {
