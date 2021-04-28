@@ -28,6 +28,7 @@ var semverProcessor = "net.thauvin.erik:semver:1.2.0"
 
 repositories {
     mavenCentral()
+    jcenter() // needed for detekt 1.16.0
 }
 
 dependencies {
