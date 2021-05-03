@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.thauvin.erik:isgd-shorten:0.9.2")
+    implementation("net.thauvin.erik:isgd-shorten:0.9.2-SNAPSHOT")
 }
 
 application {
