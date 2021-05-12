@@ -17,13 +17,13 @@ dependencies {
 }
 
 application {
-    mainClassName = "com.example.IsgdExampleKt"
+    mainClass.set("com.example.IsgdExampleKt")
 }
 
 tasks {
     register("runJava", JavaExec::class) {
         group = "application"
         main = "com.example.IsgdSample"
-        classpath = sourceSets["main"].runtimeClasspath
+        classpath = sourceSets.main.get().runtimeClasspath
     }
 }

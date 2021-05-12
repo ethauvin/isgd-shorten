@@ -1,7 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
     jacoco
+    java
     `java-library`
     `maven-publish`
     signing
@@ -32,6 +34,8 @@ repositories {
 }
 
 dependencies {
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 }
@@ -69,9 +73,14 @@ val javadocJar by tasks.creating(Jar::class) {
 }
 
 tasks {
-
     withType<KotlinCompile>().configureEach {
         kotlinOptions.jvmTarget = "1.8"
+    }
+
+    withType<Test> {
+        testLogging {
+            exceptionFormat = TestExceptionFormat.FULL
+        }
     }
 
     withType<GenerateMavenPom> {
@@ -79,7 +88,7 @@ tasks {
     }
 
     jacoco {
-        toolVersion = "0.8.7-SNAPSHOT"
+        toolVersion = "0.8.7"
     }
 
     jacocoTestReport {
@@ -169,7 +178,7 @@ publishing {
                 scm {
                     connection.set("scm:git:git://github.com/$gitHub.git")
                     developerConnection.set("scm:git:git@github.com:$gitHub.git")
-                    url.set("$mavenUrl")
+                    url.set(mavenUrl)
                 }
                 issueManagement {
                     system.set("GitHub")
