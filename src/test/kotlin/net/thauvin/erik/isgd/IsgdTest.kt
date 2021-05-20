@@ -84,7 +84,8 @@ class IsgdTest {
     @Test
     fun testShortenXml() {
         assertEquals(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><output><shorturl>$shortUrl</shorturl></output>",
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + 
+                "<output><shorturl>$shortUrl</shorturl></output>",
             Isgd.shorten(url, format = Format.XML)
         )
     }
