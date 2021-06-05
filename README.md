@@ -58,6 +58,24 @@ dependencies {
 ```
 Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://search.maven.org/artifact/net.thauvin.erik/isgd-shorten/0.9.2/jar).
 
+### Errors
+
+An `IsgdException` is thrown when an API error occurs. The error message (text, XML or JSON) and HTTP status code can be retrieved as follows: 
+
+```kotlin
+try {
+    Isgd.shorten("http://is.gd/Pt2sET") // already shorten
+} catch (e: IsgdException)
+    println("Status Code: ${e.statusCode}")
+    println("${e.message})
+}
+```
+
+```
+Status Code: 400
+Error: Sorry, the URL you entered is on our internal blacklist. It may have been used abusively in the past, or it may link to another URL redirection service.
+```
+
 ### v.gd
 
 Additionally, link can be shortened using [v.gd](https://v.gd/) by setting the `isVgd` flag:

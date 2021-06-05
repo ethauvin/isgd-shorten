@@ -38,7 +38,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 /**
- * See the [is.gd API](https://is.gd/apishorteningreference.php)
+ * See the [is.gd API](https://is.gd/apishorteningreference.php).
  */
 enum class Format(val type: String) {
     WEB("web"), SIMPLE("simple"), XML("xml"), JSON("json")
@@ -48,18 +48,25 @@ fun String.encode(): String {
     return URLEncoder.encode(this, StandardCharsets.UTF_8.name())
 }
 
+/**
+ * Implements the [is.gd API](https://is.gd/developers.php).
+ */
 class Isgd private constructor() {
     companion object {
         private fun callApi(url: String): String {
             val connection = URL(url).openConnection() as HttpURLConnection
             connection.setRequestProperty(
                 "User-Agent",
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0"
+                "Mozilla/5.0 (Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0"
             )
-            return connection.inputStream.bufferedReader().readText()
+            if (connection.responseCode in 200..399) {
+                return connection.inputStream.bufferedReader().readText()
+            } else {
+                throw IsgdException(connection.responseCode, connection.errorStream.bufferedReader().readText())
+            }
         }
 
-        private fun host(isVgd: Boolean = false): String {
+        private fun getHost(isVgd: Boolean = false): String {
             return if (isVgd) "v.gd" else "is.gd"
         }
 
@@ -68,6 +75,7 @@ class Isgd private constructor() {
          */
         @JvmStatic
         @JvmOverloads
+        @Throws(IsgdException::class)
         fun lookup(
             shorturl: String,
             callback: String = "",
@@ -78,7 +86,7 @@ class Isgd private constructor() {
                 throw IllegalArgumentException("Please specify a valid short URL to lookup.")
             }
 
-            val sb = StringBuilder("https://${host(isVgd)}/forward.php?shorturl=${shorturl.encode()}")
+            val sb = StringBuilder("https://${getHost(isVgd)}/forward.php?shorturl=${shorturl.encode()}")
 
             if (callback.isNotEmpty()) {
                 sb.append("&callback=${callback.encode()}")
@@ -94,6 +102,7 @@ class Isgd private constructor() {
          */
         @JvmStatic
         @JvmOverloads
+        @Throws(IsgdException::class)
         fun shorten(
             url: String,
             shorturl: String = "",
@@ -106,7 +115,7 @@ class Isgd private constructor() {
                 throw IllegalArgumentException("Please enter a valid URL to shorten.")
             }
 
-            val sb = StringBuilder("https://${host(isVgd)}/create.php?url=${url.encode()}")
+            val sb = StringBuilder("https://${getHost(isVgd)}/create.php?url=${url.encode()}")
 
             if (shorturl.isNotEmpty()) {
                 sb.append("&shorturl=${shorturl.encode()}")

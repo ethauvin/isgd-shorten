@@ -34,12 +34,28 @@ package net.thauvin.erik.isgd
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class IsgdTest {
     private val url = "https://www.example.com"
     private val shortUrl = "https://is.gd/Pt2sET"
     private val shortVgdUrl = "https://v.gd/2z2ncj"
+
+    @Test
+    fun testException() {
+        assertFailsWith(
+            message = "URL is already shorten",
+            exceptionClass = IsgdException::class,
+            block = { Isgd.shorten(shortUrl) }
+        )
+
+        try {
+            Isgd.shorten(shortUrl)
+        } catch (e: IsgdException) {
+            assertTrue(e.statusCode == 400, "status code == 400")
+        }
+    }
 
     @Test
     fun testLookupDefault() {
