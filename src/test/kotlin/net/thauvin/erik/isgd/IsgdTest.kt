@@ -54,6 +54,7 @@ class IsgdTest {
             Isgd.shorten(shortUrl)
         } catch (e: IsgdException) {
             assertTrue(e.statusCode == 400, "status code == 400")
+            assertTrue(e.message!!.startsWith("Error: "), "error message")
         }
     }
 

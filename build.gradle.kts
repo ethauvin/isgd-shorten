@@ -11,7 +11,7 @@ plugins {
     id("maven-publish")
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
     id("org.jetbrains.dokka") version "1.4.32"
-    id("org.sonarqube") version "3.2.0"
+    id("org.sonarqube") version "3.3"
     id("signing")
     kotlin("jvm") version "1.5.10"
     kotlin("kapt") version "1.5.10"
@@ -139,20 +139,20 @@ tasks {
     register("deploy") {
         description = "Copies all needed files to the $deployDir directory."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
-        dependsOn("build", "jar")
+        dependsOn(build, jar)
         outputs.dir(deployDir)
         inputs.files(copyToDeploy)
-        mustRunAfter("clean")
+        mustRunAfter(clean)
     }
 
     register("release") {
         description = "Publishes version ${project.version} to local repository."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
-        dependsOn("wrapper", "deploy", "gitTag", "publishToMavenLocal")
+        dependsOn(wrapper, "deploy", gitTag, publishToMavenLocal)
     }
 
     "sonarqube" {
-        dependsOn("jacocoTestReport")
+        dependsOn(jacocoTestReport)
     }
 }
 
