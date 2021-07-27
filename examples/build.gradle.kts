@@ -1,7 +1,7 @@
 plugins {
     id("application")
     id("com.github.ben-manes.versions") version "0.39.0"
-    kotlin("jvm") version "1.5.10"
+    kotlin("jvm") version "1.5.21"
 }
 
 // ./gradlew run --args='https://www.example.com https://is.gd/Pt2sET'
@@ -23,7 +23,7 @@ application {
 tasks {
     register("runJava", JavaExec::class) {
         group = "application"
-        main = "com.example.IsgdSample"
+        mainClass.set("com.example.IsgdSample")
         classpath = sourceSets.main.get().runtimeClasspath
     }
 }

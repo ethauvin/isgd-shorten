@@ -45,9 +45,9 @@ class IsgdTest {
     @Test
     fun testException() {
         assertFailsWith(
-            message = "URL is already shorten",
-            exceptionClass = IsgdException::class,
-            block = { Isgd.shorten(shortUrl) }
+                message = "URL is already shorten",
+                exceptionClass = IsgdException::class,
+                block = { Isgd.shorten(shortUrl) }
         )
 
         try {
@@ -68,17 +68,17 @@ class IsgdTest {
     fun testLookupJson() {
         assertEquals("{ \"url\": \"$url\" }", Isgd.lookup(shortUrl, format = Format.JSON))
         assertEquals(
-            "test({ \"url\": \"$url\" });",
-            Isgd.lookup(shortUrl, callback = "test", format = Format.JSON),
-            "with callback"
+                "test({ \"url\": \"$url\" });",
+                Isgd.lookup(shortUrl, callback = "test", format = Format.JSON),
+                "with callback"
         )
     }
 
     @Test
     fun testLookupXml() {
         assertEquals(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><output><url>$url</url></output>",
-            Isgd.lookup(shortUrl, format = Format.XML)
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><output><url>$url</url></output>",
+                Isgd.lookup(shortUrl, format = Format.XML)
         )
     }
 
@@ -92,18 +92,18 @@ class IsgdTest {
     fun testShortenJson() {
         assertEquals("{ \"shorturl\": \"$shortUrl\" }", Isgd.shorten(url, format = Format.JSON))
         assertEquals(
-            "test({ \"shorturl\": \"$shortUrl\" });",
-            Isgd.shorten(url, callback = "test", format = Format.JSON),
-            "with callback"
+                "test({ \"shorturl\": \"$shortUrl\" });",
+                Isgd.shorten(url, callback = "test", format = Format.JSON),
+                "with callback"
         )
     }
 
     @Test
     fun testShortenXml() {
         assertEquals(
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + 
-                "<output><shorturl>$shortUrl</shorturl></output>",
-            Isgd.shorten(url, format = Format.XML)
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                        "<output><shorturl>$shortUrl</shorturl></output>",
+                Isgd.shorten(url, format = Format.XML)
         )
     }
 
