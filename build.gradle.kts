@@ -4,7 +4,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id("com.github.ben-manes.versions") version "0.39.0"
-    id("io.gitlab.arturbosch.detekt") version "1.18.0-RC2"
+    id("io.gitlab.arturbosch.detekt") version "1.18.0"
     id("jacoco")
     id("java")
     id("java-library")
@@ -13,8 +13,8 @@ plugins {
     id("org.jetbrains.dokka") version "1.5.0"
     id("org.sonarqube") version "3.3"
     id("signing")
-    kotlin("jvm") version "1.5.21"
-    kotlin("kapt") version "1.5.21"
+    kotlin("jvm") version "1.5.30"
+    kotlin("kapt") version "1.5.30"
 }
 
 group = "net.thauvin.erik"
@@ -27,8 +27,6 @@ var isRelease = "release" in gradle.startParameter.taskNames
 
 val publicationName = "mavenJava"
 
-var semverProcessor = "net.thauvin.erik:semver:1.2.0"
-
 repositories {
     mavenCentral()
     maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
@@ -39,12 +37,6 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-}
-
-kapt {
-    arguments {
-        arg("semver.project.dir", projectDir)
-    }
 }
 
 java {
