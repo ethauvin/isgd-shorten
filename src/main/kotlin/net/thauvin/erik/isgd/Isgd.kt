@@ -45,7 +45,7 @@ enum class Format(val type: String) {
 }
 
 fun String.encode(): String {
-    return URLEncoder.encode(this, StandardCharsets.UTF_8.name())
+    return URLEncoder.encode(this, StandardCharsets.UTF_8).replace("+", "%20").replace("*", "%2A").replace("%7E", "~")
 }
 
 /**
@@ -56,8 +56,8 @@ class Isgd private constructor() {
         private fun callApi(url: String): String {
             val connection = URL(url).openConnection() as HttpURLConnection
             connection.setRequestProperty(
-                    "User-Agent",
-                    "Mozilla/5.0 (Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0"
+                "User-Agent",
+                "Mozilla/5.0 (Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0"
             )
             if (connection.responseCode in 200..399) {
                 return connection.inputStream.bufferedReader().readText()
@@ -77,10 +77,10 @@ class Isgd private constructor() {
         @JvmOverloads
         @Throws(IsgdException::class)
         fun lookup(
-                shorturl: String,
-                callback: String = "",
-                format: Format = Format.SIMPLE,
-                isVgd: Boolean = false
+            shorturl: String,
+            callback: String = "",
+            format: Format = Format.SIMPLE,
+            isVgd: Boolean = false
         ): String {
             if (shorturl.isEmpty()) {
                 throw IllegalArgumentException("Please specify a valid short URL to lookup.")
@@ -104,12 +104,12 @@ class Isgd private constructor() {
         @JvmOverloads
         @Throws(IsgdException::class)
         fun shorten(
-                url: String,
-                shorturl: String = "",
-                callback: String = "",
-                logstats: Boolean = false,
-                format: Format = Format.SIMPLE,
-                isVgd: Boolean = false
+            url: String,
+            shorturl: String = "",
+            callback: String = "",
+            logstats: Boolean = false,
+            format: Format = Format.SIMPLE,
+            isVgd: Boolean = false
         ): String {
             if (url.isEmpty()) {
                 throw IllegalArgumentException("Please enter a valid URL to shorten.")

@@ -3,18 +3,18 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.40.0"
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("com.github.ben-manes.versions") version "0.42.0"
+    id("io.gitlab.arturbosch.detekt") version "1.21.0"
     id("java")
     id("java-library")
     id("maven-publish")
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
-    id("org.jetbrains.dokka") version "1.6.10"
-    id("org.jetbrains.kotlinx.kover") version "0.4.4"
-    id("org.sonarqube") version "3.3"
+    id("org.jetbrains.dokka") version "1.7.10"
+    id("org.jetbrains.kotlinx.kover") version "0.6.0"
+    id("org.sonarqube") version "3.4.0.2513"
     id("signing")
-    kotlin("jvm") version "1.6.10"
-    kotlin("kapt") version "1.6.10"
+    kotlin("jvm") version "1.7.20"
+    kotlin("kapt") version "1.7.20"
 }
 
 group = "net.thauvin.erik"
@@ -56,7 +56,7 @@ sonarqube {
         property("sonar.organization", "ethauvin-github")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/kover/report.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/kover/xml/report.xml")
     }
 }
 
@@ -120,7 +120,7 @@ tasks {
     register("deploy") {
         description = "Copies all needed files to the $deployDir directory."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
-        dependsOn(build, jar)
+        dependsOn(clean, wrapper, build, jar)
         outputs.dir(deployDir)
         inputs.files(copyToDeploy)
         mustRunAfter(clean)

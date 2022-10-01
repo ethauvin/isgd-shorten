@@ -1,6 +1,6 @@
-[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause) [![release](https://img.shields.io/github/release/ethauvin/isgd-shorten.svg)](https://github.com/ethauvin/isgd-shorten/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten)
+[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause) [![release](https://img.shields.io/github/release/ethauvin/isgd-shorten.svg)](https://github.com/ethauvin/isgd-shorten/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/isgd-shorten/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/isgd-shorten?targetFile=pom.xml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten) [![GitHub CI](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml/badge.svg)](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml) [![CircleCI](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten) [![GitHub CI](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml/badge.svg)](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml) [![CircleCI](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master)
 
 # [is.gd](https://is.gd/developers.php) Shortener for Kotlin/Java/Android
 
@@ -44,7 +44,7 @@ Isgd.shorten(url = url, shorturl="foobar", callback = "test", logstats = true, f
 ```
 returns:
 
-```json
+```js
 test({ "shorturl": "https://is.gd/foobar" });
 ```
 ### Gradle
@@ -52,11 +52,15 @@ test({ "shorturl": "https://is.gd/foobar" });
 To use with [Gradle](https://gradle.org/), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/build.gradle.kts) file:
 
 ```gradle
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation("net.thauvin.erik:isgd-shorten:0.9.2")
 }
 ```
-Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://search.maven.org/artifact/net.thauvin.erik/isgd-shorten/0.9.2/jar).
+Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten).
 
 ### Errors
 
@@ -64,7 +68,7 @@ An `IsgdException` is thrown when an API error occurs. The error message (text, 
 
 ```kotlin
 try {
-    Isgd.shorten("http://is.gd/Pt2sET") // already shorten
+    Isgd.shorten("https://is.gd/Pt2sET") // already shorten
 } catch (e: IsgdException)
     println("Status Code: ${e.statusCode}")
     println("${e.message})
