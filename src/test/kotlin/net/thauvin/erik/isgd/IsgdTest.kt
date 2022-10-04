@@ -32,10 +32,17 @@
 
 package net.thauvin.erik.isgd
 
+import assertk.all
+import assertk.assertThat
+import assertk.assertions.contains
+import assertk.assertions.isEqualTo
+import assertk.assertions.isNotNull
+import assertk.assertions.matches
+import assertk.assertions.prop
+import assertk.assertions.startsWith
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
 class IsgdTest {
     private val url = "https://www.example.com"
@@ -45,7 +52,7 @@ class IsgdTest {
     @Test
     fun testException() {
         assertFailsWith(
-            message = "URL is already shorten",
+            message = "shorten(duplicate)",
             exceptionClass = IsgdException::class,
             block = { Isgd.shorten(shortUrl) }
         )
@@ -53,15 +60,17 @@ class IsgdTest {
         try {
             Isgd.shorten(shortUrl)
         } catch (e: IsgdException) {
-            assertTrue(e.statusCode == 400, "status code != 400")
-            assertTrue(e.message!!.startsWith("Error: "), "error message is invalid")
+            assertThat(e, "shorten(duplicate)").all {
+                prop(IsgdException::statusCode).isEqualTo(400)
+                prop(IsgdException::message).isNotNull().startsWith("Error: ")
+            }
         }
     }
 
     @Test
     fun testLookup() {
         assertFailsWith(
-            message = "empty url",
+            message = "lookup(empty)",
             exceptionClass = IllegalArgumentException::class,
             block = { Isgd.lookup("") }
         )
@@ -70,7 +79,7 @@ class IsgdTest {
     @Test
     fun testLookupDefault() {
         assertEquals(url, Isgd.lookup(shortUrl))
-        assertEquals(url, Isgd.lookup(shortVgdUrl, isVgd = true), "v.gd")
+        assertEquals(url, Isgd.lookup(shortVgdUrl, isVgd = true), "lookup(isVgd)")
     }
 
     @Test
@@ -79,7 +88,7 @@ class IsgdTest {
         assertEquals(
             "test({ \"url\": \"$url\" });",
             Isgd.lookup(shortUrl, callback = "test", format = Format.JSON),
-            "with callback"
+            "lookup(callback)"
         )
     }
 
@@ -94,13 +103,13 @@ class IsgdTest {
     @Test
     fun testShorten() {
         assertFailsWith(
-            message = "empty url",
+            message = "shorten(empty)",
             exceptionClass = IllegalArgumentException::class,
             block = { Isgd.shorten("") }
         )
 
         assertFailsWith(
-            message = "shorturl already take",
+            message = "shorten(shorturl)",
             exceptionClass = IsgdException::class,
             block = { Isgd.shorten(url, shorturl = "test") }
         )
@@ -108,9 +117,11 @@ class IsgdTest {
 
     @Test
     fun testShortenDefault() {
-        assertEquals(shortUrl, Isgd.shorten(url))
-        assertEquals(shortVgdUrl, Isgd.shorten(url, isVgd = true), "v.gd")
-        assertTrue(Isgd.shorten(url, logstats = true).matches("https://is.gd/\\w{6}".toRegex()), "with logstats")
+        assertEquals(shortUrl, Isgd.shorten(url), "shorten(url)")
+        assertEquals(shortVgdUrl, Isgd.shorten(url, isVgd = true), "shorten(isVgd)")
+        assertThat(Isgd.shorten(url, logstats = true), "shorten(callback)").matches("https://is.gd/\\w{6}".toRegex())
+
+
     }
 
     @Test
@@ -119,7 +130,7 @@ class IsgdTest {
         assertEquals(
             "test({ \"shorturl\": \"$shortUrl\" });",
             Isgd.shorten(url, callback = "test", format = Format.JSON),
-            "with callback"
+            "shorten(callback,json)"
         )
     }
 
@@ -134,6 +145,6 @@ class IsgdTest {
 
     @Test
     fun testShortenWeb() {
-        assertTrue(Isgd.shorten(url, format = Format.WEB).contains(shortUrl))
+        assertThat(Isgd.shorten(url, format = Format.WEB)).contains(shortUrl)
     }
 }
