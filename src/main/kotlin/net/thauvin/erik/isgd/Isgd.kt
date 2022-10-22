@@ -45,7 +45,10 @@ enum class Format(val type: String) {
 }
 
 fun String.encode(): String {
-    return URLEncoder.encode(this, StandardCharsets.UTF_8).replace("+", "%20").replace("*", "%2A").replace("%7E", "~")
+    return URLEncoder.encode(this, StandardCharsets.UTF_8)
+        .replace("+", "%20")
+        .replace("*", "%2A")
+        .replace("%7E", "~")
 }
 
 /**
