@@ -3,22 +3,22 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.43.0"
-    id("io.gitlab.arturbosch.detekt") version "1.21.0"
+    id("com.github.ben-manes.versions") version "0.44.0"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
     id("java")
     id("java-library")
     id("maven-publish")
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
     id("org.jetbrains.dokka") version "1.7.20"
     id("org.jetbrains.kotlinx.kover") version "0.6.1"
-    id("org.sonarqube") version "3.4.0.2513"
+    id("org.sonarqube") version "3.5.0.2730"
     id("signing")
-    kotlin("jvm") version "1.7.20"
-    kotlin("kapt") version "1.7.20"
+    kotlin("jvm") version "1.8.0"
+    kotlin("kapt") version "1.8.0"
 }
 
 group = "net.thauvin.erik"
-description = "is.gd Shortener for Kotlin, Java & Android"
+description = "A simple implementation of the is.gd URL shortening and lookup APIs"
 
 val gitHub = "ethauvin/$name"
 val mavenUrl = "https://github.com/$gitHub"
@@ -42,8 +42,8 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
     withSourcesJar()
 }
 
@@ -163,8 +163,8 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:git://github.com/$gitHub.git")
-                    developerConnection.set("scm:git:git@github.com:$gitHub.git")
+                    connection.set("scm:git://github.com/$gitHub.git")
+                    developerConnection.set("scm:git@github.com:$gitHub.git")
                     url.set(mavenUrl)
                 }
                 issueManagement {
