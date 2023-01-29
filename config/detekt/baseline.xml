@@ -1,7 +1,9 @@
-<?xml version="1.0" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <SmellBaseline>
-  <Blacklist></Blacklist>
-  <Whitelist>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
     <ID>LongParameterList:Isgd.kt$Isgd.Companion$( url: String, shorturl: String = "", callback: String = "", logstats: Boolean = false, format: Format = Format.SIMPLE, isVgd: Boolean = false )</ID>
-  </Whitelist>
+    <ID>MagicNumber:Isgd.kt$Isgd.Companion$200</ID>
+    <ID>MagicNumber:Isgd.kt$Isgd.Companion$399</ID>
+  </CurrentIssues>
 </SmellBaseline>

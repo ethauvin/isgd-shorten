@@ -1,24 +1,24 @@
-import com.jfrog.bintray.gradle.tasks.BintrayUploadTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.FileInputStream
-import java.util.*
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    jacoco
-    `java-library`
-    `maven-publish`
-    id("com.github.ben-manes.versions") version "0.29.0"
-    id("com.jfrog.bintray") version "1.8.5"
-    id("io.gitlab.arturbosch.detekt") version "1.11.0"
+    id("com.github.ben-manes.versions") version "0.44.0"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("java")
+    id("java-library")
+    id("maven-publish")
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
-    id("org.jetbrains.dokka") version "1.4.0-rc"
-    id("org.jetbrains.kotlin.jvm") version "1.4.0"
-    id("org.jetbrains.kotlin.kapt") version "1.4.0"
-    id("org.sonarqube") version "3.0"
+    id("org.jetbrains.dokka") version "1.7.20"
+    id("org.jetbrains.kotlinx.kover") version "0.6.1"
+    id("org.sonarqube") version "3.5.0.2730"
+    id("signing")
+    kotlin("jvm") version "1.8.0"
+    kotlin("kapt") version "1.8.0"
 }
 
 group = "net.thauvin.erik"
-description = "is.gd Shortener for Kotlin/Java"
+description = "A simple implementation of the is.gd URL shortening and lookup APIs"
 
 val gitHub = "ethauvin/$name"
 val mavenUrl = "https://github.com/$gitHub"
@@ -27,60 +27,39 @@ var isRelease = "release" in gradle.startParameter.taskNames
 
 val publicationName = "mavenJava"
 
-var semverProcessor = "net.thauvin.erik:semver:1.2.0"
-
-// Load local.properties
-File("local.properties").apply {
-    if (exists()) {
-        FileInputStream(this).use { fis ->
-            Properties().apply {
-                load(fis)
-                forEach { (k, v) ->
-                    extra[k as String] = v
-                }
-            }
-        }
-    }
-}
-
 repositories {
-    jcenter()
+    mavenCentral()
+    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-}
+    implementation(platform(kotlin("bom")))
+    implementation("net.thauvin.erik:urlencoder:1.3.0")
 
-kapt {
-    arguments {
-        arg("semver.project.dir", projectDir)
-    }
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    withSourcesJar()
 }
 
 detekt {
+    //toolVersion = "main-SNAPSHOT"
     baseline = project.rootDir.resolve("config/detekt/baseline.xml")
-}
-
-jacoco {
-    toolVersion = "0.8.5"
 }
 
 sonarqube {
     properties {
         property("sonar.projectKey", "ethauvin_$name")
+        property("sonar.organization", "ethauvin-github")
+        property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/kover/xml/report.xml")
     }
-}
-
-val sourcesJar by tasks.creating(Jar::class) {
-    archiveClassifier.set("sources")
-    from(sourceSets.getByName("main").allSource)
 }
 
 val javadocJar by tasks.creating(Jar::class) {
@@ -92,15 +71,15 @@ val javadocJar by tasks.creating(Jar::class) {
 }
 
 tasks {
-    withType<JacocoReport> {
-        reports {
-            xml.isEnabled = true
-            html.isEnabled = true
-        }
+    withType<KotlinCompile>().configureEach {
+        kotlinOptions.jvmTarget = java.targetCompatibility.toString()
     }
 
-    withType<KotlinCompile>().configureEach {
-        kotlinOptions.jvmTarget = "1.8"
+    withType<Test> {
+        testLogging {
+            exceptionFormat = TestExceptionFormat.FULL
+            events = setOf(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
+        }
     }
 
     withType<GenerateMavenPom> {
@@ -108,7 +87,7 @@ tasks {
     }
 
     assemble {
-        dependsOn(sourcesJar, javadocJar)
+        dependsOn(javadocJar)
     }
 
     clean {
@@ -140,75 +119,23 @@ tasks {
         }
     }
 
-    val bintrayUpload by existing(BintrayUploadTask::class) {
-        dependsOn(publishToMavenLocal, gitTag)
-        doFirst {
-            versionName = "${project.version}"
-            versionDesc = "${project.name} ${project.version}"
-            versionVcsTag = "${project.version}"
-            versionReleased = Date().toString()
-        }
-    }
-
     register("deploy") {
         description = "Copies all needed files to the $deployDir directory."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
-        dependsOn("build", "jar")
+        dependsOn(clean, wrapper, build, jar)
         outputs.dir(deployDir)
         inputs.files(copyToDeploy)
-        mustRunAfter("clean")
+        mustRunAfter(clean)
     }
 
     register("release") {
-        description = "Publishes version ${project.version} to Bintray."
+        description = "Publishes version ${project.version} to local repository."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
-        dependsOn("wrapper", bintrayUpload)
+        dependsOn(wrapper, "deploy", gitTag, publishToMavenLocal)
     }
 
     "sonarqube" {
-        dependsOn("jacocoTestReport")
-    }
-}
-
-fun findProperty(s: String) = project.findProperty(s) as String?
-bintray {
-    user = findProperty("bintray.user")
-    key = findProperty("bintray.apikey")
-    publish = isRelease
-    setPublications(publicationName)
-    pkg.apply {
-        repo = "maven"
-        name = project.name
-        desc = description
-        websiteUrl = mavenUrl
-        issueTrackerUrl = "$mavenUrl/issues"
-        githubRepo = gitHub
-        githubReleaseNotesFile = "README.md"
-        vcsUrl = "$mavenUrl.git"
-        setLabels(
-            "android",
-            "is.gd",
-            "v.gd",
-            "java",
-            "kotlin",
-            "shorten",
-            "shorten-urls",
-            "shortener",
-            "shortener-service",
-            "shortens-links",
-            "shorturl",
-            "url-shortener"
-        )
-        setLicenses("BSD 3-Clause")
-        publicDownloadNumbers = true
-        version.apply {
-            name = project.version as String
-            desc = description
-            vcsTag = project.version as String
-            gpg.apply {
-                sign = true
-            }
-        }
+        dependsOn(koverReport)
     }
 }
 
@@ -216,37 +143,51 @@ publishing {
     publications {
         create<MavenPublication>(publicationName) {
             from(components["java"])
-            artifact(sourcesJar)
             artifact(javadocJar)
-            pom.withXml {
-                asNode().apply {
-                    appendNode("name", project.name)
-                    appendNode("description", project.description)
-                    appendNode("url", mavenUrl)
-
-                    appendNode("licenses").appendNode("license").apply {
-                        appendNode("name", "BSD 3-Clause")
-                        appendNode("url", "https://opensource.org/licenses/BSD-3-Clause")
+            pom {
+                name.set(project.name)
+                description.set(project.description)
+                url.set(mavenUrl)
+                licenses {
+                    license {
+                        name.set("BSD 3-Clause")
+                        url.set("https://opensource.org/licenses/BSD-3-Clause")
                     }
-
-                    appendNode("developers").appendNode("developer").apply {
-                        appendNode("id", "ethauvin")
-                        appendNode("name", "Erik C. Thauvin")
-                        appendNode("email", "erik@thauvin.net")
+                }
+                developers {
+                    developer {
+                        id.set("ethauvin")
+                        name.set("Erik C. Thauvin")
+                        email.set("erik@thauvin.net")
+                        url.set("https://erik.thauvin.net/")
                     }
-
-                    appendNode("scm").apply {
-                        appendNode("connection", "scm:git:$mavenUrl.git")
-                        appendNode("developerConnection", "scm:git:git@github.com:$gitHub.git")
-                        appendNode("url", mavenUrl)
-                    }
-
-                    appendNode("issueManagement").apply {
-                        appendNode("system", "GitHub")
-                        appendNode("url", "$mavenUrl/issues")
-                    }
+                }
+                scm {
+                    connection.set("scm:git://github.com/$gitHub.git")
+                    developerConnection.set("scm:git@github.com:$gitHub.git")
+                    url.set(mavenUrl)
+                }
+                issueManagement {
+                    system.set("GitHub")
+                    url.set("$mavenUrl/issues")
                 }
             }
         }
     }
+    repositories {
+        maven {
+            name = "ossrh"
+            project.afterEvaluate {
+                url = if (project.version.toString().contains("SNAPSHOT"))
+                    uri("https://oss.sonatype.org/content/repositories/snapshots/") else
+                    uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            }
+            credentials(PasswordCredentials::class)
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications[publicationName])
 }

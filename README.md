@@ -1,10 +1,16 @@
-[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause) [![release](https://img.shields.io/github/release/ethauvin/isgd-shorten.svg)](https://github.com/ethauvin/isgd-shorten/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten) [![Download](https://api.bintray.com/packages/ethauvin/maven/isgd-shorten/images/download.svg)](https://bintray.com/ethauvin/maven/isgd-shorten/_latestVersion)
+[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
+[![Kotlin](https://img.shields.io/badge/kotlin-1.8.0-blue)](https://kotlinlang.org/)
+[![Nexus Snapshot](https://img.shields.io/nexus/s/net.thauvin.erik/isgd-shorten?label=snapshot&server=https%3A%2F%2Foss.sonatype.org%2F)](https://oss.sonatype.org/content/repositories/snapshots/net/thauvin/erik/isgd-shorten/)
+[![release](https://img.shields.io/github/release/ethauvin/isgd-shorten.svg)](https://github.com/ethauvin/isgd-shorten/releases/latest)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/isgd-shorten/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/isgd-shorten?targetFile=pom.xml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten) [![Build Status](https://travis-ci.com/ethauvin/isgd-shorten.svg?branch=master)](https://travis-ci.com/ethauvin/isgd-shorten) [![CircleCI](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten)
+[![GitHub CI](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml/badge.svg)](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml)
+[![CircleCI](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master)
 
-# [is.gd](https://is.gd/developers.php) Shortener for Kotlin/Java/Android
+# [is.gd](https://is.gd/developers.php) Shortener for Kotlin, Java & Android
 
-A simple implementation of the [is.gd API](https://is.gd/developers.php).
+A simple implementation of the [is.gd](https://is.gd/) URL shortening and lookup [APIs](https://is.gd/developers.php).
 
 ## Examples (TL;DR)
 
@@ -44,7 +50,7 @@ Isgd.shorten(url = url, shorturl="foobar", callback = "test", logstats = true, f
 ```
 returns:
 
-```json
+```js
 test({ "shorturl": "https://is.gd/foobar" });
 ```
 ### Gradle
@@ -53,14 +59,33 @@ To use with [Gradle](https://gradle.org/), include the following dependency in y
 
 ```gradle
 repositories {
-    jcenter()
+    mavenCentral()
+    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") } // only needed for SNAPSHOT
 }
 
 dependencies {
-    implementation("net.thauvin.erik:isgd-shorten:0.9.1")
+    implementation("net.thauvin.erik:isgd-shorten:0.9.2")
 }
 ```
-Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://search.maven.org/artifact/net.thauvin.erik/isgd-shorten/0.9.1/jar).
+Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik/isgd-shorten).
+
+### Errors
+
+An `IsgdException` is thrown when an API error occurs. The error message (text, XML or JSON) and HTTP status code can be retrieved as follows: 
+
+```kotlin
+try {
+    Isgd.shorten("https://is.gd/Pt2sET") // already shorten
+} catch (e: IsgdException)
+    println("Status Code: ${e.statusCode}")
+    println("${e.message})
+}
+```
+
+```
+Status Code: 400
+Error: Sorry, the URL you entered is on our internal blacklist. It may have been used abusively in the past, or it may link to another URL redirection service.
+```
 
 ### v.gd
 
