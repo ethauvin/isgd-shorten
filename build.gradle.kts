@@ -34,6 +34,7 @@ repositories {
 
 dependencies {
     implementation(platform(kotlin("bom")))
+    implementation("net.thauvin.erik:urlencoder:1.3.0")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))

@@ -32,10 +32,9 @@
 
 package net.thauvin.erik.isgd
 
+import net.thauvin.erik.urlencoder.UrlEncoder
 import java.net.HttpURLConnection
 import java.net.URL
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 /**
  * See the [is.gd API](https://is.gd/apishorteningreference.php).
@@ -44,12 +43,7 @@ enum class Format(val type: String) {
     WEB("web"), SIMPLE("simple"), XML("xml"), JSON("json")
 }
 
-fun String.encode(): String {
-    return URLEncoder.encode(this, StandardCharsets.UTF_8)
-        .replace("+", "%20")
-        .replace("*", "%2A")
-        .replace("%7E", "~")
-}
+fun String.encode(): String = UrlEncoder.encode(this)
 
 /**
  * Implements the [is.gd API](https://is.gd/developers.php).
@@ -60,7 +54,7 @@ class Isgd private constructor() {
             val connection = URL(url).openConnection() as HttpURLConnection
             connection.setRequestProperty(
                 "User-Agent",
-                "Mozilla/5.0 (Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0"
+                "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0"
             )
             if (connection.responseCode in 200..399) {
                 return connection.inputStream.bufferedReader().readText()
@@ -85,9 +79,7 @@ class Isgd private constructor() {
             format: Format = Format.SIMPLE,
             isVgd: Boolean = false
         ): String {
-            if (shorturl.isEmpty()) {
-                throw IllegalArgumentException("Please specify a valid short URL to lookup.")
-            }
+            require(shorturl.isNotEmpty()) { "Please specify a valid short URL to lookup." }
 
             val sb = StringBuilder("https://${getHost(isVgd)}/forward.php?shorturl=${shorturl.encode()}")
 
@@ -114,9 +106,7 @@ class Isgd private constructor() {
             format: Format = Format.SIMPLE,
             isVgd: Boolean = false
         ): String {
-            if (url.isEmpty()) {
-                throw IllegalArgumentException("Please enter a valid URL to shorten.")
-            }
+            require(url.isNotEmpty()) { "Please enter a valid URL to shorten." }
 
             val sb = StringBuilder("https://${getHost(isVgd)}/create.php?url=${url.encode()}")
 
