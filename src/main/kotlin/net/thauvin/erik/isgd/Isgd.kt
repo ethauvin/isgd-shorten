@@ -56,9 +56,11 @@ class Isgd private constructor() {
                 "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0"
             )
             if (connection.responseCode in 200..399) {
-                return connection.inputStream.bufferedReader().readText()
+                return connection.inputStream.bufferedReader().use { it.readText() }
             } else {
-                throw IsgdException(connection.responseCode, connection.errorStream.bufferedReader().readText())
+                throw IsgdException(
+                    connection.responseCode,
+                    connection.errorStream.bufferedReader().use { it.readText() })
             }
         }
 
