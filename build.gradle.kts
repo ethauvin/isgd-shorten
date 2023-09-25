@@ -3,18 +3,18 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.44.0"
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("com.github.ben-manes.versions") version "0.48.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.1"
     id("java")
     id("java-library")
     id("maven-publish")
     id("net.thauvin.erik.gradle.semver") version "1.0.4"
-    id("org.jetbrains.dokka") version "1.7.20"
-    id("org.jetbrains.kotlinx.kover") version "0.6.1"
-    id("org.sonarqube") version "3.5.0.2730"
+    id("org.jetbrains.dokka") version "1.9.0"
+    id("org.jetbrains.kotlinx.kover") version "0.7.3"
+    id("org.sonarqube") version "4.3.1.3277"
     id("signing")
-    kotlin("jvm") version "1.8.0"
-    kotlin("kapt") version "1.8.0"
+    kotlin("jvm") version "1.9.10"
+    kotlin("kapt") version "1.9.10"
 }
 
 group = "net.thauvin.erik"
@@ -34,17 +34,28 @@ repositories {
 
 dependencies {
     implementation(platform(kotlin("bom")))
-    implementation("net.thauvin.erik:urlencoder:1.3.0")
+    implementation("net.thauvin.erik.urlencoder:urlencoder-lib:1.4.0")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.27.0")
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
     withSourcesJar()
+}
+
+koverReport {
+    defaults {
+        xml {
+            onCheck = true
+        }
+        html {
+            onCheck = true
+        }
+    }
 }
 
 detekt {
@@ -58,7 +69,7 @@ sonarqube {
         property("sonar.organization", "ethauvin-github")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/kover/xml/report.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory.get()}/reports/kover/report.xml")
     }
 }
 
@@ -122,7 +133,7 @@ tasks {
     register("deploy") {
         description = "Copies all needed files to the $deployDir directory."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
-        dependsOn(clean, wrapper, build, jar)
+        dependsOn(clean, build, jar)
         outputs.dir(deployDir)
         inputs.files(copyToDeploy)
         mustRunAfter(clean)
@@ -131,10 +142,10 @@ tasks {
     register("release") {
         description = "Publishes version ${project.version} to local repository."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
-        dependsOn(wrapper, "deploy", gitTag, publishToMavenLocal)
+        dependsOn("deploy", gitTag, publishToMavenLocal)
     }
 
-    "sonarqube" {
+    "sonar" {
         dependsOn(koverReport)
     }
 }
@@ -163,8 +174,8 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git://github.com/$gitHub.git")
-                    developerConnection.set("scm:git@github.com:$gitHub.git")
+                    connection.set("scm:git:https://github.com/$gitHub.git")
+                    developerConnection.set("scm:git:git@github.com:$gitHub.git")
                     url.set(mavenUrl)
                 }
                 issueManagement {
