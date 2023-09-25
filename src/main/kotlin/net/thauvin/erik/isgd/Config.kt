@@ -44,19 +44,21 @@ class Config private constructor(
 ) {
     /**
      * Configures the parameters to create/lookup an is.gd shortlink.
+     *
+     * See the [is.gd API](https://is.gd/apishorteningreference.php).
      */
     data class Builder(
-        var url: String = "",
-        var shorturl: String = "",
-        var callback: String = "",
-        var logstats: Boolean = false,
-        var format: Format = Format.SIMPLE,
-        var isVgd: Boolean = false
+        private var url: String = "",
+        private var shorturl: String = "",
+        private var callback: String = "",
+        private var logstats: Boolean = false,
+        private var format: Format = Format.SIMPLE,
+        private var isVgd: Boolean = false
     ) {
         fun url(url: String) = apply { this.url = url }
-        fun shorturl(shorturl: String) = apply { this.shorturl = shorturl }
+        fun shortUrl(shortUrl: String) = apply { this.shorturl = shortUrl }
         fun callback(callback: String) = apply { this.callback = callback }
-        fun logstats(logstats: Boolean) = apply { this.logstats = logstats }
+        fun logStats(logStats: Boolean) = apply { this.logstats = logStats }
         fun format(format: Format) = apply { this.format = format }
         fun isVgd(isVgd: Boolean) = apply { this.isVgd = isVgd }
 

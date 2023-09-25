@@ -84,7 +84,7 @@ class IsgdTest {
         assertFailsWith(
             message = "lookup(config:empty)",
             exceptionClass = IllegalArgumentException::class,
-            block = { Isgd.lookup(Config.Builder().shorturl("").build()) }
+            block = { Isgd.lookup(Config.Builder().shortUrl("").build()) }
         )
     }
 
@@ -96,10 +96,10 @@ class IsgdTest {
 
     @Test
     fun testLookupDefaultConfig() {
-        assertEquals(url, Isgd.lookup(Config.Builder().shorturl(shortUrl).build()), "lookup(config)")
+        assertEquals(url, Isgd.lookup(Config.Builder().shortUrl(shortUrl).build()), "lookup(config)")
         assertEquals(
             url, Isgd.lookup(
-                Config.Builder().shorturl(shortVgdUrl).isVgd(true).build()
+                Config.Builder().shortUrl(shortVgdUrl).isVgd(true).build()
             ), "lookup(config:isVgd)"
         )
     }
@@ -119,12 +119,12 @@ class IsgdTest {
     fun testLookupJsonConfig() {
         assertEquals(
             "{ \"url\": \"$url\" }",
-            Isgd.lookup(Config.Builder().shorturl(shortUrl).format(Format.JSON).build()), "lookup(config)"
+            Isgd.lookup(Config.Builder().shortUrl(shortUrl).format(Format.JSON).build()), "lookup(config)"
         )
 
         assertEquals(
             "test({ \"url\": \"$url\" });",
-            Isgd.lookup(Config.Builder().shorturl(shortUrl).callback("test").format(Format.JSON).build()),
+            Isgd.lookup(Config.Builder().shortUrl(shortUrl).callback("test").format(Format.JSON).build()),
             "lookup(config:callback)"
         )
     }
@@ -141,7 +141,7 @@ class IsgdTest {
     fun testLookupXmlConfig() {
         assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><output><url>$url</url></output>",
-            Isgd.lookup(Config.Builder().shorturl(shortUrl).format(Format.XML).build()),
+            Isgd.lookup(Config.Builder().shortUrl(shortUrl).format(Format.XML).build()),
             "lookup(config:xml)"
         )
     }
@@ -172,7 +172,7 @@ class IsgdTest {
         assertFailsWith(
             message = "shorten(config:shorturl)",
             exceptionClass = IsgdException::class,
-            block = { Isgd.shorten(Config.Builder(url).shorturl("test").build()) }
+            block = { Isgd.shorten(Config.Builder(url).shortUrl("test").build()) }
         )
     }
 
@@ -191,7 +191,7 @@ class IsgdTest {
             Isgd.shorten(Config.Builder().url(url).isVgd(true).build()),
             "shorten(config:isVgd)"
         )
-        assertThat(Isgd.shorten(Config.Builder().url(url).logstats(true).build()), "shorten(config:callback)")
+        assertThat(Isgd.shorten(Config.Builder().url(url).logStats(true).build()), "shorten(config:callback)")
             .matches("https://is.gd/\\w{6}".toRegex())
     }
 

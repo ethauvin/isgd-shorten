@@ -81,9 +81,9 @@ To make it easier to use the library with Java, configuration builders are avail
 ```java
 var config = new Config.Builder()
         .url("https://www.example.com/")
-        .shorturl("foobar")
+        .shortUrl("foobar")
         .callback("test")
-        .logstats(true)
+        .logStats(true)
         .format(Format.JSON)
         .build();
 
