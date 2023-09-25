@@ -5,5 +5,6 @@
     <ID>LongParameterList:Isgd.kt$Isgd.Companion$( url: String, shorturl: String = "", callback: String = "", logstats: Boolean = false, format: Format = Format.SIMPLE, isVgd: Boolean = false )</ID>
     <ID>MagicNumber:Isgd.kt$Isgd.Companion$200</ID>
     <ID>MagicNumber:Isgd.kt$Isgd.Companion$399</ID>
+    <ID>WildcardImport:IsgdTest.kt$import assertk.assertions.*</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -31,7 +31,7 @@
 
 package net.thauvin.erik.isgd
 
-import net.thauvin.erik.urlencoder.UrlEncoder
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -42,7 +42,7 @@ enum class Format(val type: String) {
     WEB("web"), SIMPLE("simple"), XML("xml"), JSON("json")
 }
 
-fun String.encode(): String = UrlEncoder.encode(this)
+fun String.encode(): String = UrlEncoderUtil.encode(this)
 
 /**
  * Implements the [is.gd API](https://is.gd/developers.php).
@@ -69,6 +69,24 @@ class Isgd private constructor() {
         }
 
         /**
+         * Lookup a shortlink.
+         *
+         * See the [is.gd API](https://is.gd/apilookupreference.php).
+         */
+        @JvmStatic
+        @Throws(IsgdException::class)
+        fun lookup(config: Config): String {
+            return lookup(
+                config.shorturl,
+                config.callback,
+                config.format,
+                config.isVgd
+            )
+        }
+
+        /**
+         * Lookup a shortlink.
+         *
          * See the [is.gd API](https://is.gd/apilookupreference.php).
          */
         @JvmStatic
@@ -94,6 +112,26 @@ class Isgd private constructor() {
         }
 
         /**
+         * Shortens a link.
+         *
+         * See the [is.gd API](https://is.gd/apishorteningreference.php).
+         */
+        @JvmStatic
+        @Throws(IsgdException::class)
+        fun shorten(config: Config): String {
+            return shorten(
+                config.url,
+                config.shorturl,
+                config.callback,
+                config.logstats,
+                config.format,
+                config.isVgd
+            )
+        }
+
+        /**
+         * Shortens a link.
+         *
          * See the [is.gd API](https://is.gd/apishorteningreference.php).
          */
         @JvmStatic
