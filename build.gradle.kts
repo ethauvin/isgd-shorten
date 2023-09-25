@@ -1,6 +1,6 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.github.ben-manes.versions") version "0.48.0"
@@ -107,6 +107,15 @@ tasks {
         }
     }
 
+    dokkaJavadoc {
+        dokkaSourceSets {
+            configureEach {
+                includes.from("config/dokka/packages.md")
+            }
+        }
+        mustRunAfter("kaptKotlin")
+    }
+
     val copyToDeploy by registering(Copy::class) {
         from(configurations.runtimeClasspath) {
             exclude("annotations-*.jar")
@@ -143,10 +152,6 @@ tasks {
         description = "Publishes version ${project.version} to local repository."
         group = PublishingPlugin.PUBLISH_TASK_GROUP
         dependsOn("deploy", gitTag, publishToMavenLocal)
-    }
-
-    "sonar" {
-        dependsOn(koverReport)
     }
 }
 

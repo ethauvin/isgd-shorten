@@ -46,7 +46,12 @@ returns:
 All of the [is.gd API](https://is.gd/developers.php) parameters are supported:
 
 ```kotlin
-Isgd.shorten(url = url, shorturl="foobar", callback = "test", logstats = true, format = Format.JSON)
+Isgd.shorten(
+    url = url,
+    shorturl="foobar",
+    callback = "test",
+    logstats = true,
+    format = Format.JSON)
 ```
 returns:
 
@@ -90,7 +95,7 @@ var config = new Config.Builder()
         .format(Format.XML)
         .build();
 
-Isgd.lookup(config)
+Isgd.lookup(config);
 ```
 ### Errors
 
