@@ -24,8 +24,7 @@ Isgd.lookup("https://is.gd/Pt2sET") // returns https://www.example.com
 
 ```
 
- - View [Kotlin](https://github.com/ethauvin/isgd-shorten/blob/master/examples/src/main/kotlin/com/example/IsgdExample.kt) or [Java](https://github.com/ethauvin/isgd-shorten/blob/master/examples/src/main/java/com/example/IsgdSample.java) Examples.
-
+- View [Kotlin](https://github.com/ethauvin/isgd-shorten/blob/master/examples/src/main/kotlin/com/example/IsgdExample.kt) or [Java](https://github.com/ethauvin/isgd-shorten/blob/master/examples/src/main/java/com/example/IsgdSample.java) Examples.
 
 ### JSON or XML
 
@@ -53,11 +52,13 @@ Isgd.shorten(
     logstats = true,
     format = Format.JSON)
 ```
+
 returns:
 
 ```js
 test({ "shorturl": "https://is.gd/foobar" });
 ```
+
 ### Gradle
 
 To use with [Gradle](https://gradle.org/), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/build.gradle.kts) file:
@@ -69,9 +70,10 @@ repositories {
 }
 
 dependencies {
-    implementation("net.thauvin.erik:isgd-shorten:0.9.2")
+    implementation("net.thauvin.erik:isgd-shorten:1.0.0")
 }
 ```
+
 Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://central.sonatype.com/artifact/net.thauvin.erik/isgd-shorten).
 
 ## Java
@@ -89,6 +91,7 @@ var config = new Config.Builder()
 
 Isgd.shorten(config);
 ```
+
 ```java
 var config = new Config.Builder()
         .shortUrl("https://is.gd/Pt2sET")
@@ -97,9 +100,10 @@ var config = new Config.Builder()
 
 Isgd.lookup(config);
 ```
+
 ### Errors
 
-An `IsgdException` is thrown when an API error occurs. The error message (text, XML or JSON) and HTTP status code can be retrieved as follows: 
+An `IsgdException` is thrown when an API error occurs. The error message (text, XML or JSON) and HTTP status code can be retrieved as follows:
 
 ```kotlin
 try {
