@@ -53,9 +53,3 @@ atlassian-ide-plugin.xml
 
 # Editor-based Rest Client
 .idea/httpRequests
-
-bin
-deploy
-target
-local.properties
-

@@ -1,5 +1,5 @@
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
-[![Kotlin](https://img.shields.io/badge/kotlin-1.9.10-7f52ff)](https://kotlinlang.org/)
+[![Kotlin](https://img.shields.io/badge/kotlin-1.9.20-7f52ff)](https://kotlinlang.org/)
 [![Nexus Snapshot](https://img.shields.io/nexus/s/net.thauvin.erik/isgd-shorten?label=snapshot&server=https%3A%2F%2Foss.sonatype.org%2F)](https://oss.sonatype.org/content/repositories/snapshots/net/thauvin/erik/isgd-shorten/)
 [![release](https://img.shields.io/github/release/ethauvin/isgd-shorten.svg)](https://github.com/ethauvin/isgd-shorten/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik/isgd-shorten.svg?color=blue)](https://central.sonatype.com/artifact/net.thauvin.erik/isgd-shorten)
@@ -24,7 +24,7 @@ Isgd.lookup("https://is.gd/Pt2sET") // returns https://www.example.com
 
 ```
 
-- View [Kotlin](https://github.com/ethauvin/isgd-shorten/blob/master/examples/src/main/kotlin/com/example/IsgdExample.kt) or [Java](https://github.com/ethauvin/isgd-shorten/blob/master/examples/src/main/java/com/example/IsgdSample.java) Examples.
+- View [bld](https://github.com/ethauvin/isgd-shorten/blob/master/examples/bld) or [Gradle](https://github.com/ethauvin/isgd-shorten/blob/master/examples/gradle) Examples.
 
 ### JSON or XML
 
@@ -59,9 +59,20 @@ returns:
 test({ "shorturl": "https://is.gd/foobar" });
 ```
 
+### bld
+
+To use with [bld](https://rife2.com/bld), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/bld/src/bld/java/com/example/ExampleBuild.java) file:
+
+```java
+repositories = List.of(MAVEN_CENTRAL, SONATYPE_SNAPSHOTS_LEGACY);
+
+scope(compile)
+    .include("net.thauvin.erik:isgd-shorten:1.0.0");
+```
+
 ### Gradle
 
-To use with [Gradle](https://gradle.org/), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/build.gradle.kts) file:
+To use with [Gradle](https://gradle.org/), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/gradle/build.gradle.kts) file:
 
 ```gradle
 repositories {
