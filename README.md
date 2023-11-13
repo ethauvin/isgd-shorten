@@ -5,7 +5,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik/isgd-shorten.svg?color=blue)](https://central.sonatype.com/artifact/net.thauvin.erik/isgd-shorten)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten)
-[![GitHub CI](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml/badge.svg)](https://github.com/ethauvin/isgd-shorten/actions/workflows/gradle.yml)
+[![GitHub CI](https://github.com/ethauvin/isgd-shorten/actions/workflows/bld.yml/badge.svg)](https://github.com/ethauvin/isgd-shorten/actions/workflows/bld.yml)
 [![CircleCI](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/isgd-shorten/tree/master)
 
 # [is.gd](https://is.gd/developers.php) Shortener for Kotlin, Java & Android
