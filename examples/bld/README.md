@@ -1,7 +1,7 @@
 ## Kotlin Example
 To compile & run the Kotlin example:
 
-```text
+```console
 ./bld compile
 
 ./bld run --args='https://www.example.com https://is.gd/Pt2sET'
@@ -10,7 +10,7 @@ To compile & run the Kotlin example:
 ## Java Example
 To compile & run the Java example:
 
-```text
+```console
 ./bld compile
 
 ./bld run-java --args='https://www.example.com https://is.gd/Pt2sET'

@@ -3,7 +3,6 @@ package com.example;
 import rife.bld.BaseProject;
 import rife.bld.BuildCommand;
 import rife.bld.extension.CompileKotlinOperation;
-import rife.bld.extension.CompileKotlinOptions;
 import rife.bld.operations.RunOperation;
 
 import java.util.List;
@@ -36,11 +35,6 @@ public class ExampleBuild extends BaseProject {
     public void compile() throws Exception {
         new CompileKotlinOperation()
                 .fromProject(this)
-                .compileOptions(
-                        new CompileKotlinOptions()
-                                .jdkRelease(javaRelease)
-                                .verbose(true)
-                )
                 .execute();
 
         // Also compile the Java source code
