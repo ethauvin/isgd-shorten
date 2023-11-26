@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <pattern value="net.thauvin.erik.IsgdShortenBuild" method="detekt" />
+    <pattern value="net.thauvin.erik.IsgdShortenBuild" method="detektBaseline" />
+    <pattern value="net.thauvin.erik.IsgdShortenBuild" />
+    <pattern value="net.thauvin.erik.IsgdShortenBuild" method="jacoco" />
+  </component>
   <component name="PDMPlugin">
     <option name="customRuleSets">
       <list>
