@@ -67,7 +67,7 @@ To use with [bld](https://rife2.com/bld), include the following dependency in yo
 repositories = List.of(MAVEN_CENTRAL, SONATYPE_SNAPSHOTS_LEGACY);
 
 scope(compile)
-    .include("net.thauvin.erik:isgd-shorten:1.0.0");
+    .include("net.thauvin.erik:isgd-shorten:1.0.`");
 ```
 
 ### Gradle
@@ -81,7 +81,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.thauvin.erik:isgd-shorten:1.0.0")
+    implementation("net.thauvin.erik:isgd-shorten:1.0.1")
 }
 ```
 

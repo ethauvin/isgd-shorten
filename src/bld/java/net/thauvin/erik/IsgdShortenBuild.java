@@ -58,7 +58,7 @@ public class IsgdShortenBuild extends Project {
     public IsgdShortenBuild() {
         pkg = "net.thauvin.erik";
         name = "isgd-shorten";
-        version = version(1, 0, 1, "SNAPSHOT");
+        version = version(1, 0, 1);
 
         javaRelease = 11;
         downloadSources = true;
@@ -69,7 +69,6 @@ public class IsgdShortenBuild extends Project {
         final var kotlin = version(1, 9, 21);
         scope(compile)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
-                .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib-common", kotlin))
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib-jdk7", kotlin))
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", kotlin))
                 .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm", version(1, 4, 0)));

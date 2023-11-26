@@ -24,7 +24,7 @@ public class ExampleBuild extends BaseProject {
         repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL, SONATYPE_SNAPSHOTS_LEGACY);
 
         scope(compile)
-                .include(dependency("net.thauvin.erik:isgd-shorten:1.0.0"));
+                .include(dependency("net.thauvin.erik:isgd-shorten:1.0.1"));
     }
 
     public static void main(String[] args) {
