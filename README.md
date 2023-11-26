@@ -1,8 +1,9 @@
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
 [![Kotlin](https://img.shields.io/badge/kotlin-1.9.21-7f52ff)](https://kotlinlang.org/)
-[![Nexus Snapshot](https://img.shields.io/nexus/s/net.thauvin.erik/isgd-shorten?label=snapshot&server=https%3A%2F%2Foss.sonatype.org%2F)](https://oss.sonatype.org/content/repositories/snapshots/net/thauvin/erik/isgd-shorten/)
 [![release](https://img.shields.io/github/release/ethauvin/isgd-shorten.svg)](https://github.com/ethauvin/isgd-shorten/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik/isgd-shorten.svg?color=blue)](https://central.sonatype.com/artifact/net.thauvin.erik/isgd-shorten)
+[![Nexus Snapshot](https://img.shields.io/nexus/s/net.thauvin.erik/isgd-shorten?label=snapshot&server=https%3A%2F%2Foss.sonatype.org%2F)](https://oss.sonatype.org/content/repositories/snapshots/net/thauvin/erik/isgd-shorten/)
+
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_isgd-shorten&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_isgd-shorten)
 [![GitHub CI](https://github.com/ethauvin/isgd-shorten/actions/workflows/bld.yml/badge.svg)](https://github.com/ethauvin/isgd-shorten/actions/workflows/bld.yml)
