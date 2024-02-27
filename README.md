@@ -1,6 +1,6 @@
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
 [![Kotlin](https://img.shields.io/badge/kotlin-1.9.21-7f52ff)](https://kotlinlang.org/)
-[![bld](https://img.shields.io/badge/1.8.0-FA9052?label=bld&labelColor=2392FF)](https://rife2.com/bld)
+[![bld](https://img.shields.io/badge/1.9.0-FA9052?label=bld&labelColor=2392FF)](https://rife2.com/bld)
 [![release](https://img.shields.io/github/release/ethauvin/isgd-shorten.svg)](https://github.com/ethauvin/isgd-shorten/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik/isgd-shorten.svg?color=blue)](https://central.sonatype.com/artifact/net.thauvin.erik/isgd-shorten)
 [![Nexus Snapshot](https://img.shields.io/nexus/s/net.thauvin.erik/isgd-shorten?label=snapshot&server=https%3A%2F%2Foss.sonatype.org%2F)](https://oss.sonatype.org/content/repositories/snapshots/net/thauvin/erik/isgd-shorten/)
@@ -28,7 +28,7 @@ Isgd.lookup("https://is.gd/Pt2sET") // returns https://www.example.com
 
 - View [bld](https://github.com/ethauvin/isgd-shorten/blob/master/examples/bld) or [Gradle](https://github.com/ethauvin/isgd-shorten/blob/master/examples/gradle) Examples.
 
-### JSON or XML
+## JSON or XML
 
 The [is.gd API](https://is.gd/developers.php) can return data in plain text (default), JSON or XML.
 
@@ -42,7 +42,7 @@ returns:
 { "shorturl": "https://is.gd/Pt2sET" }
 ```
 
-### Parameters
+## Parameters
 
 All of the [is.gd API](https://is.gd/developers.php) parameters are supported:
 
@@ -61,7 +61,7 @@ returns:
 test({ "shorturl": "https://is.gd/foobar" });
 ```
 
-### bld
+## bld
 
 To use with [bld](https://rife2.com/bld), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/bld/src/bld/java/com/example/ExampleBuild.java) file:
 
@@ -72,7 +72,7 @@ scope(compile)
     .include("net.thauvin.erik:isgd-shorten:1.0.`");
 ```
 
-### Gradle
+## Gradle
 
 To use with [Gradle](https://gradle.org/), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/gradle/build.gradle.kts) file:
 
@@ -114,7 +114,7 @@ var config = new Config.Builder()
 Isgd.lookup(config);
 ```
 
-### Errors
+## Errors
 
 An `IsgdException` is thrown when an API error occurs. The error message (text, XML or JSON) and HTTP status code can be retrieved as follows:
 
@@ -132,7 +132,7 @@ Status Code: 400
 Error: Sorry, the URL you entered is on our internal blacklist. It may have been used abusively in the past, or it may link to another URL redirection service.
 ```
 
-### v.gd
+## v.gd
 
 Additionally, link can be shortened using [v.gd](https://v.gd/) by setting the `isVgd` flag:
 
@@ -156,5 +156,4 @@ cd isgd-shorten
 ./bld compile
 ```
 
-The project has an [IntelliJ IDEA](https://www.jetbrains.com/idea/) project structure. You can just open it after all
-the dependencies were downloaded and peruse the code.
+The project has an [IntelliJ IDEA](https://www.jetbrains.com/idea/) project structure. You can just open it after all the dependencies were downloaded and peruse the code.
