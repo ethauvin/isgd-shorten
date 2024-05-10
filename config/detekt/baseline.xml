@@ -1,10 +1,11 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues/>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>LongParameterList:Isgd.kt$Isgd.Companion$( url: String, shorturl: String = "", callback: String = "", logstats: Boolean = false, format: Format = Format.SIMPLE, isVgd: Boolean = false )</ID>
     <ID>MagicNumber:Isgd.kt$Isgd.Companion$200</ID>
     <ID>MagicNumber:Isgd.kt$Isgd.Companion$399</ID>
+    <ID>NestedBlockDepth:IsgdExample.kt$fun main(args: Array&lt;String&gt;)</ID>
     <ID>WildcardImport:IsgdTest.kt$import assertk.assertions.*</ID>
   </CurrentIssues>
 </SmellBaseline>
