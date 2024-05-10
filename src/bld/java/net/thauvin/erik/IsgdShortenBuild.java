@@ -56,6 +56,7 @@ import static rife.bld.dependencies.Scope.test;
 
 public class IsgdShortenBuild extends Project {
     final File srcMainKotlin = new File(srcMainDirectory(), "kotlin");
+
     public IsgdShortenBuild() {
         pkg = "net.thauvin.erik";
         name = "isgd-shorten";
@@ -72,6 +73,7 @@ public class IsgdShortenBuild extends Project {
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
                 .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm", version(1, 5, 0)));
         scope(test)
+                .include(dependency("org.jetbrains.kotlin", "kotlin-test-junit5", kotlin))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 2)))
                 .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 2)))
                 .include(dependency("com.willowtreeapps.assertk", "assertk-jvm", version(0, 28, 1)));
