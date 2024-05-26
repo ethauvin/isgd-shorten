@@ -88,6 +88,16 @@ class Isgd private constructor() {
          * Lookup a shortlink.
          *
          * See the [is.gd API](https://is.gd/apilookupreference.php).
+         *
+         * @param The shorturl parameter is the shortened is.gd URL that you want to look up. You can either submit the
+         * full address (e.g. https://is.gd/example) or only the unique part (e.g. example). The address you submit
+         * should be properly formed; the API lookup function is not guaranteed to handle malformed URLs the same way as when you visit them manually.
+         * @param callback The callback parameter is used to specify a callback function to wrap the returned data in
+         * when using JSON format. This can be useful when working with cross domain data. Even when using JSON format
+         * this parameter is optional.
+         * @param format The format parameter determines what format is.gd uses to send output back to you (e.g. to
+         * tell you what your new shortened URL is or if an error has occurred).
+         * @param isVgd Lookup using the `v.gd` domain.
          */
         @JvmStatic
         @JvmOverloads
@@ -133,6 +143,26 @@ class Isgd private constructor() {
          * Shortens a link.
          *
          * See the [is.gd API](https://is.gd/apishorteningreference.php).
+         *
+         * @param url The url parameter is the address that you want to shorten.
+         * @param shorturl You can specify the shorturl parameter if you'd like to pick a shortened URL instead of
+         * having is.gd randomly generate one. These must be between 5 and 30 characters long and can only contain
+         * alphanumeric characters and underscores. Shortened URLs are case sensitive. Bear in mind that a desired
+         * short URL might already be taken (this is very often the case with common words) so if you're using this
+         * option be prepared to respond to an error and get an alternative choice from your app's user.
+         * @param callback The callback parameter is used to specify a callback function to wrap the returned data in
+         * when using JSON format. This can be useful when working with cross domain data. Even when using JSON format
+         * this parameter is optional.
+         * @param logstats Turns on logging of detailed statistics when the shortened URL you create is accessed. This
+         * allows you to see how many times the link was accessed on a given day, what pages referred people to the
+         * link, what browser visitors were using etc. You can access these stats via the link preview page for your
+         * shortened URL (add a hyphen/dash to the end of the shortened URL to get to it). Creating links with
+         * statistics turned on has twice the "cost" towards our rate limit of other shortened links, so leave this
+         * parameter out of your API call if you don't require statistics on usage. See the
+         * [usage limits page](https://is.gd/usagelimits.php) for more information on this.
+         * @param format The format parameter determines what format is.gd uses to send output back to you (e.g. to
+         * tell you what your new shortened URL is or if an error has occurred).
+         * @param isVgd Shorten using the `v.gd` domain.
          */
         @JvmStatic
         @JvmOverloads

@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.thauvin.erik:isgd-shorten:1.0.1")
+    implementation("net.thauvin.erik:isgd-shorten:1.0.2-SNAPSHOT")
 }
 
 java {
@@ -25,11 +25,11 @@ application {
     mainClass.set("com.example.IsgdExampleKt")
 }
 
-tasks {
-    withType<KotlinCompile>().configureEach {
-        kotlinOptions.jvmTarget = java.targetCompatibility.toString()
-    }
+kotlin {
+    compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+}
 
+tasks {
     register("runJava", JavaExec::class) {
         group = "application"
         mainClass.set("com.example.IsgdSample")

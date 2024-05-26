@@ -34,41 +34,83 @@ package net.thauvin.erik.isgd
 /**
  * Provides a builder to create/lookup an is.gd shortlink.
  */
-class Config private constructor(
-    val url: String,
-    val shorturl: String,
-    val callback: String,
-    val logstats: Boolean,
-    val format: Format,
-    val isVgd: Boolean
+class Config(
+    var url: String = "",
+    var shorturl: String = "",
+    var callback: String = "",
+    var logstats: Boolean = false,
+    var format: Format = Format.SIMPLE,
+    var isVgd: Boolean = false
 ) {
+    constructor(builder: Builder) : this() {
+        url = builder.url
+        shorturl = builder.shorturl
+        callback = builder.callback
+        logstats = builder.logstats
+        format = builder.format
+        isVgd = builder.isVgd
+    }
+
     /**
      * Configures the parameters to create/lookup an is.gd shortlink.
      *
-     * See the [is.gd API](https://is.gd/apishorteningreference.php).
+     * See the [is.gd Shortening](https://is.gd/apishorteningreference.php) or
+     * [is.gd Lookup](https://is.gd/apilookupreference.php) APIs.
      */
     data class Builder(
-        private var url: String = "",
-        private var shorturl: String = "",
-        private var callback: String = "",
-        private var logstats: Boolean = false,
-        private var format: Format = Format.SIMPLE,
-        private var isVgd: Boolean = false
+        var url: String = "",
+        var shorturl: String = "",
+        var callback: String = "",
+        var logstats: Boolean = false,
+        var format: Format = Format.SIMPLE,
+        var isVgd: Boolean = false
     ) {
-        fun url(url: String) = apply { this.url = url }
-        fun shortUrl(shortUrl: String) = apply { this.shorturl = shortUrl }
-        fun callback(callback: String) = apply { this.callback = callback }
-        fun logStats(logStats: Boolean) = apply { this.logstats = logStats }
-        fun format(format: Format) = apply { this.format = format }
-        fun isVgd(isVgd: Boolean) = apply { this.isVgd = isVgd }
+        /**
+         * The url parameter is the address that you want to shorten.
+         */
+        fun url(url: String): Builder = apply { this.url = url }
 
-        fun build() = Config(
-            url,
-            shorturl,
-            callback,
-            logstats,
-            format,
-            isVgd
-        )
+        /**
+         * You can specify the shorturl parameter if you'd like to pick a shortened URL instead of
+         * having is.gd randomly generate one. These must be between 5 and 30 characters long and can only contain
+         * alphanumeric characters and underscores. Shortened URLs are case sensitive. Bear in mind that a desired
+         * short URL might already be taken (this is very often the case with common words) so if you're using this
+         * option be prepared to respond to an error and get an alternative choice from your app's user.
+         */
+        fun shortUrl(shortUrl: String): Builder = apply { this.shorturl = shortUrl }
+
+        /**
+         * The callback parameter is used to specify a callback function to wrap the returned data in
+         * when using JSON format. This can be useful when working with cross domain data. Even when using JSON format
+         * this parameter is optional.
+         */
+        fun callback(callback: String): Builder = apply { this.callback = callback }
+
+        /**
+         * Turns on logging of detailed statistics when the shortened URL you create is accessed. This
+         * allows you to see how many times the link was accessed on a given day, what pages referred people to the
+         * link, what browser visitors were using etc. You can access these stats via the link preview page for your
+         * shortened URL (add a hyphen/dash to the end of the shortened URL to get to it). Creating links with
+         * statistics turned on has twice the "cost" towards our rate limit of other shortened links, so leave this
+         * parameter out of your API call if you don't require statistics on usage. See the
+         * [usage limits page](https://is.gd/usagelimits.php) for more information on this.
+         */
+        fun logStats(logStats: Boolean): Builder = apply { this.logstats = logStats }
+
+        /**
+         * The format parameter determines what format is.gd uses to send output back to you (e.g. to
+         * tell you what your new shortened URL is or if an error has occurred).
+         */
+        fun format(format: Format): Builder = apply { this.format = format }
+
+        /**
+         * Shorten using the `v.gd` domain.
+         */
+        fun isVgd(isVgd: Boolean): Builder = apply { this.isVgd = isVgd }
+
+        /**
+         * Builds a new configuration.
+         */
+        fun build() = Config(this)
     }
 }
