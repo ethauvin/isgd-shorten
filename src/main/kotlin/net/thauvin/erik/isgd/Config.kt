@@ -34,22 +34,13 @@ package net.thauvin.erik.isgd
 /**
  * Provides a builder to create/lookup an is.gd shortlink.
  */
-class Config(
-    var url: String = "",
-    var shorturl: String = "",
-    var callback: String = "",
-    var logstats: Boolean = false,
-    var format: Format = Format.SIMPLE,
-    var isVgd: Boolean = false
-) {
-    constructor(builder: Builder) : this() {
-        url = builder.url
-        shorturl = builder.shorturl
-        callback = builder.callback
-        logstats = builder.logstats
-        format = builder.format
-        isVgd = builder.isVgd
-    }
+class Config private constructor(builder: Builder) {
+    val url: String = builder.url
+    val shorturl: String = builder.shorturl
+    val callback: String = builder.callback
+    val logstats: Boolean = builder.logstats
+    val format: Format = builder.format
+    val isVgd: Boolean = builder.isVgd
 
     /**
      * Configures the parameters to create/lookup an is.gd shortlink.
@@ -73,7 +64,7 @@ class Config(
         /**
          * You can specify the shorturl parameter if you'd like to pick a shortened URL instead of
          * having is.gd randomly generate one. These must be between 5 and 30 characters long and can only contain
-         * alphanumeric characters and underscores. Shortened URLs are case sensitive. Bear in mind that a desired
+         * alphanumeric characters and underscores. Shortened URLs are case-sensitive. Bear in mind that a desired
          * short URL might already be taken (this is very often the case with common words) so if you're using this
          * option be prepared to respond to an error and get an alternative choice from your app's user.
          */
