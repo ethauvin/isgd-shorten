@@ -75,7 +75,7 @@ class Isgd private constructor() {
          */
         @JvmStatic
         @Throws(IsgdException::class)
-        fun lookup(config: Config): String {
+        fun lookup(config: LookupConfig): String {
             return lookup(
                 config.shorturl,
                 config.callback,
@@ -89,9 +89,10 @@ class Isgd private constructor() {
          *
          * See the [is.gd API](https://is.gd/apilookupreference.php).
          *
-         * @param The shorturl parameter is the shortened is.gd URL that you want to look up. You can either submit the
-         * full address (e.g. https://is.gd/example) or only the unique part (e.g. example). The address you submit
-         * should be properly formed; the API lookup function is not guaranteed to handle malformed URLs the same way as when you visit them manually.
+         * @param shorturl The shorturl parameter is the shortened is.gd URL that you want to look up. You can either
+         * submit the full address (e.g. `https://is.gd/example`) or only the unique part (e.g. `example`). The address
+         * you submit should be properly formed; the API lookup function is not guaranteed to handle malformed URLs the
+         * same way as when you visit them manually.
          * @param callback The callback parameter is used to specify a callback function to wrap the returned data in
          * when using JSON format. This can be useful when working with cross domain data. Even when using JSON format
          * this parameter is optional.
@@ -128,7 +129,7 @@ class Isgd private constructor() {
          */
         @JvmStatic
         @Throws(IsgdException::class)
-        fun shorten(config: Config): String {
+        fun shorten(config: ShortenConfig): String {
             return shorten(
                 config.url,
                 config.shorturl,

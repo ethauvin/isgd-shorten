@@ -1,9 +1,9 @@
 package com.example;
 
-import net.thauvin.erik.isgd.Config;
 import net.thauvin.erik.isgd.Format;
 import net.thauvin.erik.isgd.Isgd;
 import net.thauvin.erik.isgd.IsgdException;
+import net.thauvin.erik.isgd.LookupConfig;
 
 public final class IsgdSample {
     public static void main(final String[] args) {
@@ -12,7 +12,7 @@ public final class IsgdSample {
                 try {
                     if (arg.contains("is.gd")) {
                         System.out.println(arg + " <-- " + Isgd.lookup(arg));
-                        System.out.print(Isgd.lookup(new Config.Builder().shortUrl(arg).format(Format.WEB).build()));
+                        System.out.print(Isgd.lookup(new LookupConfig.Builder(arg).format(Format.WEB).build()));
                     } else {
                         System.out.println(arg + " --> " + Isgd.shorten(arg));
                     }

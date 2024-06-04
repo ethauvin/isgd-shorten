@@ -94,11 +94,10 @@ Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](htt
 To make it easier to use the library with Java, configuration builders are available:
 
 ```java
-var config = new Config.Builder()
-        .url("https://www.example.com/")
-        .shortUrl("foobar")
+var config = new ShortenConfig.Builder("https://www.example.com/")
+        .shorturl("foobar")
         .callback("test")
-        .logStats(true)
+        .logstats(true)
         .format(Format.JSON)
         .build();
 
@@ -106,8 +105,8 @@ Isgd.shorten(config);
 ```
 
 ```java
-var config = new Config.Builder()
-        .shortUrl("https://is.gd/Pt2sET")
+var config = new LookupConfig.Builder("https://is.gd/Pt2sET")
+        .callback("test")
         .format(Format.XML)
         .build();
 

@@ -66,7 +66,7 @@ class IsgdTest {
         assertFailsWith(
             message = "shorten(config:duplicate)",
             exceptionClass = IsgdException::class,
-            block = { Isgd.shorten(Config.Builder().url(shortUrl).build()) }
+            block = { Isgd.shorten(ShortenConfig.Builder(shortUrl).build()) }
         )
     }
 
@@ -84,7 +84,7 @@ class IsgdTest {
         assertFailsWith(
             message = "lookup(config:empty)",
             exceptionClass = IllegalArgumentException::class,
-            block = { Isgd.lookup(Config.Builder().shortUrl("").build()) }
+            block = { Isgd.lookup(LookupConfig.Builder("").build()) }
         )
     }
 
@@ -96,10 +96,10 @@ class IsgdTest {
 
     @Test
     fun testLookupDefaultConfig() {
-        assertEquals(url, Isgd.lookup(Config.Builder().shortUrl(shortUrl).build()), "lookup(config)")
+        assertEquals(url, Isgd.lookup(LookupConfig.Builder(shortUrl).build()), "lookup(config)")
         assertEquals(
             url, Isgd.lookup(
-                Config.Builder().shortUrl(shortVgdUrl).isVgd(true).build()
+                LookupConfig.Builder(shortVgdUrl).isVgd(true).build()
             ), "lookup(config:isVgd)"
         )
     }
@@ -119,12 +119,12 @@ class IsgdTest {
     fun testLookupJsonConfig() {
         assertEquals(
             "{ \"url\": \"$url\" }",
-            Isgd.lookup(Config.Builder().shortUrl(shortUrl).format(Format.JSON).build()), "lookup(config)"
+            Isgd.lookup(LookupConfig.Builder(shortUrl).format(Format.JSON).build()), "lookup(config)"
         )
 
         assertEquals(
             "test({ \"url\": \"$url\" });",
-            Isgd.lookup(Config.Builder().shortUrl(shortUrl).callback("test").format(Format.JSON).build()),
+            Isgd.lookup(LookupConfig.Builder(shortUrl).callback("test").format(Format.JSON).build()),
             "lookup(config:callback)"
         )
     }
@@ -141,7 +141,7 @@ class IsgdTest {
     fun testLookupXmlConfig() {
         assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><output><url>$url</url></output>",
-            Isgd.lookup(Config.Builder().shortUrl(shortUrl).format(Format.XML).build()),
+            Isgd.lookup(LookupConfig.Builder(shortUrl).format(Format.XML).build()),
             "lookup(config:xml)"
         )
     }
@@ -166,13 +166,13 @@ class IsgdTest {
         assertFailsWith(
             message = "shorten(config:empty)",
             exceptionClass = IllegalArgumentException::class,
-            block = { Isgd.shorten(Config.Builder().url("").build()) }
+            block = { Isgd.shorten(ShortenConfig.Builder("").build()) }
         )
 
         assertFailsWith(
             message = "shorten(config:shorturl)",
             exceptionClass = IsgdException::class,
-            block = { Isgd.shorten(Config.Builder(url).shortUrl("test").build()) }
+            block = { Isgd.shorten(ShortenConfig.Builder(url).shorturl("test").build()) }
         )
     }
 
@@ -185,13 +185,13 @@ class IsgdTest {
 
     @Test
     fun testShortenDefaultConfig() {
-        assertEquals(shortUrl, Isgd.shorten(Config.Builder().url(url).build()), "shorten(config:url)")
+        assertEquals(shortUrl, Isgd.shorten(ShortenConfig.Builder(url).build()), "shorten(config:url)")
         assertEquals(
             shortVgdUrl,
-            Isgd.shorten(Config.Builder().url(url).isVgd(true).build()),
+            Isgd.shorten(ShortenConfig.Builder(url).isVgd(true).build()),
             "shorten(config:isVgd)"
         )
-        assertThat(Isgd.shorten(Config.Builder().url(url).logStats(true).build()), "shorten(config:callback)")
+        assertThat(Isgd.shorten(ShortenConfig.Builder(url).logstats(true).build()), "shorten(config:callback)")
             .matches("https://is.gd/\\w{6}".toRegex())
     }
 
@@ -209,11 +209,11 @@ class IsgdTest {
     fun testShortenJsonConfig() {
         assertEquals(
             "{ \"shorturl\": \"$shortUrl\" }",
-            Isgd.shorten(Config.Builder().url(url).format(Format.JSON).build()), "shorten(config:json)"
+            Isgd.shorten(ShortenConfig.Builder(url).format(Format.JSON).build()), "shorten(config:json)"
         )
         assertEquals(
             "test({ \"shorturl\": \"$shortUrl\" });",
-            Isgd.shorten(Config.Builder().url(url).callback("test").format(Format.JSON).build()),
+            Isgd.shorten(ShortenConfig.Builder(url).callback("test").format(Format.JSON).build()),
             "shorten(config:callback,json)"
         )
     }
@@ -232,7 +232,7 @@ class IsgdTest {
         assertEquals(
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                     "<output><shorturl>$shortUrl</shorturl></output>",
-            Isgd.shorten(Config.Builder().url(url).format(Format.XML).build()),
+            Isgd.shorten(ShortenConfig.Builder(url).format(Format.XML).build()),
             "shorten(config:xml)"
         )
     }
@@ -244,7 +244,7 @@ class IsgdTest {
 
     @Test
     fun testShortenWebConfig() {
-        assertThat(Isgd.shorten(Config.Builder().url(url).format(Format.WEB).build()), "shorten(config:web)")
+        assertThat(Isgd.shorten(ShortenConfig.Builder(url).format(Format.WEB).build()), "shorten(config:web)")
             .contains(shortUrl)
     }
 }

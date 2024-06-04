@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/isgd-examples.iml" filepath="$PROJECT_DIR$/.idea/modules/isgd-examples.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/isgd-examples.main.iml" filepath="$PROJECT_DIR$/.idea/modules/isgd-examples.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/isgd-examples.test.iml" filepath="$PROJECT_DIR$/.idea/modules/isgd-examples.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/isgd-shorten-examples-gradle.iml" filepath="$PROJECT_DIR$/.idea/modules/isgd-shorten-examples-gradle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/isgd-shorten-examples-gradle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/isgd-shorten-examples-gradle.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/isgd-shorten-examples-gradle.test.iml" filepath="$PROJECT_DIR$/.idea/modules/isgd-shorten-examples-gradle.test.iml" />
     </modules>
   </component>
 </project>

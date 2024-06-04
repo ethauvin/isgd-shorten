@@ -1,5 +1,5 @@
 /*
- * ShortenConfig.kt
+ * LookupConfig.kt
  *
  * Copyright 2020-2024 Erik C. Thauvin (erik@thauvin.net)
  *
@@ -32,39 +32,29 @@
 package net.thauvin.erik.isgd
 
 /**
- * Provides a builder to create an is.gd shortlink.
+ * Provides a builder to lookup an is.gd shortlink.
  */
-class ShortenConfig private constructor(builder: Builder) {
-    val url: String = builder.url
+class LookupConfig private constructor(builder: Builder) {
     val shorturl: String = builder.shorturl
     val callback: String = builder.callback
-    val logstats: Boolean = builder.logstats
     val format: Format = builder.format
     val isVgd: Boolean = builder.isVgd
 
     /**
-     * Configures the parameters to create an is.gd shortlink.
+     * Configures the parameters to lookup an is.gd shortlink.
      *
-     * See the [is.gd Shortening](https://is.gd/apishorteningreference.php) API.
+     * See the [is.gd Lookup]() API.
      */
-    data class Builder(var url: String) {
-        var shorturl: String = ""
+    data class Builder(var shorturl: String) {
         var callback: String = ""
-        var logstats: Boolean = false
         var format: Format = Format.SIMPLE
         var isVgd: Boolean = false
 
         /**
-         * The url parameter is the address that you want to shorten.
-         */
-        fun url(url: String): Builder = apply { this.url = url }
-
-        /**
-         * You can specify the shorturl parameter if you'd like to pick a shortened URL instead of
-         * having is.gd randomly generate one. These must be between 5 and 30 characters long and can only contain
-         * alphanumeric characters and underscores. Shortened URLs are case-sensitive. Bear in mind that a desired
-         * short URL might already be taken (this is very often the case with common words) so if you're using this
-         * option be prepared to respond to an error and get an alternative choice from your app's user.
+         * The shorturl parameter is the shortened is.gd URL that you want to look up. You can either submit the full
+         * address (e.g. `https://is.gd/example`) or only the unique part (e.g. `example`). The address you submit
+         * should be properly formed; the API lookup function is not guaranteed to handle malformed URLs the same way
+         * as when you visit them manually.
          */
         fun shorturl(shorturl: String): Builder = apply { this.shorturl = shorturl }
 
@@ -74,17 +64,6 @@ class ShortenConfig private constructor(builder: Builder) {
          * this parameter is optional.
          */
         fun callback(callback: String): Builder = apply { this.callback = callback }
-
-        /**
-         * Turns on logging of detailed statistics when the shortened URL you create is accessed. This
-         * allows you to see how many times the link was accessed on a given day, what pages referred people to the
-         * link, what browser visitors were using etc. You can access these stats via the link preview page for your
-         * shortened URL (add a hyphen/dash to the end of the shortened URL to get to it). Creating links with
-         * statistics turned on has twice the "cost" towards our rate limit of other shortened links, so leave this
-         * parameter out of your API call if you don't require statistics on usage. See the
-         * [usage limits page](https://is.gd/usagelimits.php) for more information on this.
-         */
-        fun logstats(logstats: Boolean): Builder = apply { this.logstats = logstats }
 
         /**
          * The format parameter determines what format is.gd uses to send output back to you (e.g. to
@@ -100,6 +79,6 @@ class ShortenConfig private constructor(builder: Builder) {
         /**
          * Builds a new configuration.
          */
-        fun build() = ShortenConfig(this)
+        fun build() = LookupConfig(this)
     }
 }
