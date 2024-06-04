@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: net.thauvin.erik:isgd-shorten:1.0.2-SNAPSHOT" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.thauvin.erik" artifactId="isgd-shorten" version="1.0.2-SNAPSHOT" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/thauvin/erik/isgd-shorten/1.0.2-SNAPSHOT/isgd-shorten-1.0.2-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -48,14 +48,13 @@ class Config private constructor(builder: Builder) {
      * See the [is.gd Shortening](https://is.gd/apishorteningreference.php) or
      * [is.gd Lookup](https://is.gd/apilookupreference.php) APIs.
      */
-    data class Builder(
-        var url: String = "",
+    data class Builder(var url: String) {
         var shorturl: String = "",
         var callback: String = "",
         var logstats: Boolean = false,
         var format: Format = Format.SIMPLE,
         var isVgd: Boolean = false
-    ) {
+
         /**
          * The url parameter is the address that you want to shorten.
          */

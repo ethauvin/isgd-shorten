@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: net.thauvin.erik.urlencoder:urlencoder-lib-jvm:1.5.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.thauvin.erik.urlencoder" artifactId="urlencoder-lib-jvm" version="1.5.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.thauvin.erik.urlencoder/urlencoder-lib-jvm/1.5.0/93179364d9e915b17baa4160877fa770154e9aa5/urlencoder-lib-jvm-1.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
