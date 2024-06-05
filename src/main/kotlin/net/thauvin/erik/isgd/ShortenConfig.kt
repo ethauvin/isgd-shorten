@@ -46,6 +46,8 @@ class ShortenConfig private constructor(builder: Builder) {
      * Configures the parameters to create an is.gd shortlink.
      *
      * See the [is.gd Shortening](https://is.gd/apishorteningreference.php) API.
+     *
+     * @param url The url parameter is the address that you want to shorten.
      */
     data class Builder(var url: String) {
         var shorturl: String = ""

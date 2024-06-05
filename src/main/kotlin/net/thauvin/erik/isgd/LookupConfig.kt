@@ -44,6 +44,11 @@ class LookupConfig private constructor(builder: Builder) {
      * Configures the parameters to lookup an is.gd shortlink.
      *
      * See the [is.gd Lookup]() API.
+     *
+     * @param shorturl The shorturl parameter is the shortened is.gd URL that you want to look up. You can either submit
+     * the full address (e.g. `https://is.gd/example`) or only the unique part (e.g. `example`). The address you submit
+     * should be properly formed; the API lookup function is not guaranteed to handle malformed URLs the same way as
+     * when you visit them manually.
      */
     data class Builder(var shorturl: String) {
         var callback: String = ""
