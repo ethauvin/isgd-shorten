@@ -35,8 +35,8 @@ import rife.bld.BuildCommand;
 import rife.bld.Project;
 import rife.bld.extension.CompileKotlinOperation;
 import rife.bld.extension.DetektOperation;
+import rife.bld.extension.DokkaOperation;
 import rife.bld.extension.JacocoReportOperation;
-import rife.bld.extension.dokka.DokkaOperation;
 import rife.bld.extension.dokka.LoggingLevel;
 import rife.bld.extension.dokka.OutputFormat;
 import rife.bld.operations.exceptions.ExitStatusException;
@@ -68,14 +68,14 @@ public class IsgdShortenBuild extends Project {
 
         repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL);
 
-        final var kotlin = version(2, 0, 0);
+        final var kotlin = version(2, 0, 20);
         scope(compile)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
                 .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm", version(1, 5, 0)));
         scope(test)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-test-junit5", kotlin))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 2)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 2)))
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 11, 0)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 11, 0)))
                 .include(dependency("com.willowtreeapps.assertk", "assertk-jvm", version(0, 28, 1)));
 
         publishOperation()
@@ -83,28 +83,26 @@ public class IsgdShortenBuild extends Project {
                         .withCredentials(property("sonatype.user"), property("sonatype.password"))
                         : repository(SONATYPE_RELEASES_LEGACY.location())
                         .withCredentials(property("sonatype.user"), property("sonatype.password")))
+                .repository(repository("github"))
                 .info()
                 .groupId(pkg)
                 .artifactId(name)
                 .description("A simple implementation of the is.gd URL shortening and lookup APIs")
                 .url("https://github.com/ethauvin/" + name)
-                .developer(
-                        new PublishDeveloper()
-                                .id("ethauvin")
-                                .name("Erik C. Thauvin")
-                                .email("erik@thauvin.net")
-                                .url("https://erik.thauvin.net/")
+                .developer(new PublishDeveloper()
+                        .id("ethauvin")
+                        .name("Erik C. Thauvin")
+                        .email("erik@thauvin.net")
+                        .url("https://erik.thauvin.net/")
                 )
-                .license(
-                        new PublishLicense()
-                                .name("BSD 3-Clause")
-                                .url("https://opensource.org/licenses/BSD-3-Clause")
+                .license(new PublishLicense()
+                        .name("BSD 3-Clause")
+                        .url("https://opensource.org/licenses/BSD-3-Clause")
                 )
-                .scm(
-                        new PublishScm()
-                                .connection("scm:git:https://github.com/ethauvin/" + name + ".git")
-                                .developerConnection("scm:git:git@github.com:ethauvin/" + name + ".git")
-                                .url("https://github.com/ethauvin/" + name)
+                .scm(new PublishScm()
+                        .connection("scm:git:https://github.com/ethauvin/" + name + ".git")
+                        .developerConnection("scm:git:git@github.com:ethauvin/" + name + ".git")
+                        .url("https://github.com/ethauvin/" + name)
                 )
                 .signKey(property("sign.key"))
                 .signPassphrase(property("sign.passphrase"));
@@ -118,7 +116,7 @@ public class IsgdShortenBuild extends Project {
 
     @BuildCommand(summary = "Compiles the Kotlin project")
     @Override
-    public void compile() throws IOException {
+    public void compile() throws Exception {
         new CompileKotlinOperation()
                 .fromProject(this)
                 .execute();
@@ -142,7 +140,7 @@ public class IsgdShortenBuild extends Project {
     }
 
     @BuildCommand(summary = "Generates JaCoCo Reports")
-    public void jacoco() throws IOException {
+    public void jacoco() throws Exception {
         new JacocoReportOperation()
                 .fromProject(this)
                 .sourceFiles(srcMainKotlin)
@@ -164,6 +162,12 @@ public class IsgdShortenBuild extends Project {
     @Override
     public void publish() throws Exception {
         super.publish();
+        pomRoot();
+    }
+
+    @Override
+    public void publishLocal() throws Exception {
+        super.publishLocal();
         pomRoot();
     }
 
