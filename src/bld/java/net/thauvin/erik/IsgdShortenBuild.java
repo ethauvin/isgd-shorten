@@ -71,7 +71,7 @@ public class IsgdShortenBuild extends Project {
         final var kotlin = version(2, 1, 10);
         scope(compile)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
-                .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm", version(1, 5, 0)));
+                .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm", version(1, 6, 0)));
         scope(test)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-test-junit5", kotlin))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 11, 0)))
