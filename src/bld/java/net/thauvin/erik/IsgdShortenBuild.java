@@ -60,7 +60,7 @@ public class IsgdShortenBuild extends Project {
     public IsgdShortenBuild() {
         pkg = "net.thauvin.erik";
         name = "isgd-shorten";
-        version = version(1, 0, 2, "SNAPSHOT");
+        version = version(1, 1, 0);
 
         javaRelease = 11;
         downloadSources = true;
