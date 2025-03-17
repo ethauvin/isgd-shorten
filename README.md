@@ -19,7 +19,7 @@ A simple implementation of the [is.gd](https://is.gd/) URL shortening and lookup
 ```kotlin
 import net.thauvin.erik.isgd.Isgd
 
-...
+// ...
 
 Isgd.shorten("https://www.example.com/") // returns https://is.gd/Pt2sET
 Isgd.lookup("https://is.gd/Pt2sET") // returns https://www.example.com
@@ -72,7 +72,7 @@ scope(compile)
     .include("net.thauvin.erik:isgd-shorten:1.1.0");
 ```
 
-## Gradle
+## Gradle, Maven, etc...
 
 To use with [Gradle](https://gradle.org/), include the following dependency in your [build](https://github.com/ethauvin/isgd-shorten/blob/master/examples/gradle/build.gradle.kts) file:
 
