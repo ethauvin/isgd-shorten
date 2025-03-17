@@ -51,16 +51,20 @@ class Isgd private constructor() {
     companion object {
         private fun callApi(url: String): String {
             val connection = URL(url).openConnection() as HttpURLConnection
-            connection.setRequestProperty(
-                "User-Agent",
-                "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0"
-            )
-            if (connection.responseCode in 200..399) {
-                return connection.inputStream.bufferedReader().use { it.readText() }
-            } else {
-                throw IsgdException(
-                    connection.responseCode,
-                    connection.errorStream.bufferedReader().use { it.readText() })
+            try {
+                connection.setRequestProperty(
+                    "User-Agent",
+                    "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0"
+                )
+                if (connection.responseCode in 200..399) {
+                    return connection.inputStream.bufferedReader().use { it.readText() }
+                } else {
+                    throw IsgdException(
+                        connection.responseCode,
+                        connection.errorStream.bufferedReader().use { it.readText() })
+                }
+            } finally {
+                connection.disconnect()
             }
         }
 
