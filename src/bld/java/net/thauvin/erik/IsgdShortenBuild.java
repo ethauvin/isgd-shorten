@@ -39,6 +39,7 @@ import rife.bld.extension.DokkaOperation;
 import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.dokka.LoggingLevel;
 import rife.bld.extension.dokka.OutputFormat;
+import rife.bld.extension.kotlin.CompileOptions;
 import rife.bld.operations.exceptions.ExitStatusException;
 import rife.bld.publish.PomBuilder;
 import rife.bld.publish.PublishDeveloper;
@@ -118,8 +119,11 @@ public class IsgdShortenBuild extends Project {
     @BuildCommand(summary = "Compiles the Kotlin project")
     @Override
     public void compile() throws Exception {
+        final var options = new CompileOptions();
+        options.jvmOptions().add("--enable-native-access=ALL-UNNAMED");
         new CompileKotlinOperation()
                 .fromProject(this)
+                .compileOptions(options)
                 .execute();
     }
 
