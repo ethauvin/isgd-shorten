@@ -33,7 +33,7 @@ package net.thauvin.erik.isgd
 
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import java.net.HttpURLConnection
-import java.net.URL
+import java.net.URI
 
 /**
  * See the [is.gd API](https://is.gd/apishorteningreference.php).
@@ -50,7 +50,7 @@ fun String.encode(): String = UrlEncoderUtil.encode(this)
 class Isgd private constructor() {
     companion object {
         private fun callApi(url: String): String {
-            val connection = URL(url).openConnection() as HttpURLConnection
+            val connection = URI(url).toURL().openConnection() as HttpURLConnection
             try {
                 connection.setRequestProperty(
                     "User-Agent",
