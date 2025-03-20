@@ -60,7 +60,7 @@ public class IsgdShortenBuild extends Project {
     public IsgdShortenBuild() {
         pkg = "net.thauvin.erik";
         name = "isgd-shorten";
-        version = version(1, 1, 0);
+        version = version(1, 1, 1, "SNAPSHOT");
 
         javaRelease = 11;
         downloadSources = true;
@@ -68,7 +68,7 @@ public class IsgdShortenBuild extends Project {
 
         repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL);
 
-        final var kotlin = version(2, 1, 10);
+        final var kotlin = version(2, 1, 20);
         scope(compile)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
                 .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm", version(1, 6, 0)));
