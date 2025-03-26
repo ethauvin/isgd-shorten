@@ -119,10 +119,9 @@ public class IsgdShortenBuild extends Project {
     @BuildCommand(summary = "Compiles the Kotlin project")
     @Override
     public void compile() throws Exception {
-        var options = new CompileOptions().jvmOptions("--enable-native-access=ALL-UNNAMED");
         new CompileKotlinOperation()
                 .fromProject(this)
-                .compileOptions(options)
+                .compileOptions(new CompileOptions().verbose(true))
                 .execute();
     }
 
