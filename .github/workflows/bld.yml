@@ -32,16 +32,15 @@ jobs:
         working-directory: examples/bld
         run: ./bld download
 
-      - name: Compile and run examples [bld examples]
+      - name: Compile and run examples [bld example]
         working-directory: examples/bld
         run: |
           ./bld compile
           ./bld run --args='https://www.example.com https://is.gd/Pt2sET'
           ./bld run-java --args='https://www.example.com https://is.gd/Pt2sET'
 
-      - name: Run examples [gradle examples]
+      - name: Run examples [gradle example]
         working-directory: examples/gradle
-        if: matrix.java-version != '24'
         run: |
           ./gradlew run --args='https://www.example.com https://is.gd/Pt2sET'
           ./gradlew runJava --args='https://www.example.com https://is.gd/Pt2sET'
