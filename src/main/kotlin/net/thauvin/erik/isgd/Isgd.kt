@@ -42,6 +42,9 @@ enum class Format(val type: String) {
     WEB("web"), SIMPLE("simple"), XML("xml"), JSON("json")
 }
 
+/**
+ * Encode a string to be used in a URL.
+ */
 fun String.encode(): String = UrlEncoderUtil.encode(this)
 
 /**
@@ -68,12 +71,15 @@ class Isgd private constructor() {
             }
         }
 
-        private fun getHost(isVgd: Boolean = false): String {
+        /**
+         * Returns the appropriate host domain name, `v.gd` if `isVgd` is `true`, `is.gd` otherwise.
+         */
+        internal fun getHost(isVgd: Boolean = false): String {
             return if (isVgd) "v.gd" else "is.gd"
         }
 
         /**
-         * Lookup a shortlink.
+         * Looks up a shortlink.
          *
          * See the [is.gd API](https://is.gd/apilookupreference.php).
          */
@@ -89,7 +95,7 @@ class Isgd private constructor() {
         }
 
         /**
-         * Lookup a shortlink.
+         * Looks up a shortlink.
          *
          * See the [is.gd API](https://is.gd/apilookupreference.php).
          *
