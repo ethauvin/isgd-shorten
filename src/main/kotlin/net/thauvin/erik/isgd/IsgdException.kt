@@ -31,8 +31,6 @@
 
 package net.thauvin.erik.isgd
 
-import java.io.Serial
-
 /**
  * Thrown when an exceptional condition has occurred.
  *
@@ -41,7 +39,7 @@ import java.io.Serial
  */
 class IsgdException(val statusCode: Int, message: String) : Exception(message) {
     companion object {
-        @Serial
-        private const val serialVersionUID = 1L
+        @JvmStatic
+        private val serialVersionUID = 1L
     }
 }
