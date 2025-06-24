@@ -1,5 +1,5 @@
 /*
- * IsgdExceptionTest.kt
+ * IsgdExceptionTests.kt
  *
  * Copyright 2020-2025 Erik C. Thauvin (erik@thauvin.net)
  *
@@ -40,7 +40,7 @@ import assertk.assertions.startsWith
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
-class IsgdExceptionTest {
+class IsgdExceptionTests {
     private val shortUrl = "https://is.gd/Pt2sET"
 
     @Test

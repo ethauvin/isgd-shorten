@@ -1,5 +1,5 @@
 /*
- * IsgdTest.kt
+ * IsgdTests.kt
  *
  * Copyright 2020-2025 Erik C. Thauvin (erik@thauvin.net)
  *
@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Nested
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class IsgdTest {
+class IsgdTests {
     private val url = "https://www.example.com"
     private val shortUrl = "https://is.gd/Pt2sET"
     private val shortVgdUrl = "https://v.gd/2z2ncj"
