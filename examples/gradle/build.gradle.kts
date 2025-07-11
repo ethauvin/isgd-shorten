@@ -9,7 +9,7 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") } // only needed for SNAPSHOT
+    maven { url = uri("https://central.sonatype.com/repository/maven-snapshots/") } // only needed for SNAPSHOT
 }
 
 dependencies {
