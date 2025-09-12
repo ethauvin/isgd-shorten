@@ -5,6 +5,7 @@
     <pattern value="net.thauvin.erik.IsgdShortenBuild" method="detektBaseline" />
     <pattern value="net.thauvin.erik.IsgdShortenBuild" />
     <pattern value="net.thauvin.erik.IsgdShortenBuild" method="jacoco" />
+    <pattern value="net.thauvin.erik.IsgdShortenBuild" method="reporter" />
   </component>
   <component name="PDMPlugin">
     <option name="customRuleSets">
