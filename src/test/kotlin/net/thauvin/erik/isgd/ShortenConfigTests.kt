@@ -38,7 +38,7 @@ import kotlin.test.assertTrue
 
 class ShortenConfigTests {
     @Test
-    fun `test ShortenConfig default values`() {
+    fun `ShortenConfig default values`() {
         val config = ShortenConfig.Builder("https://example.com").build()
 
         assertEquals("https://example.com", config.url)
@@ -50,7 +50,7 @@ class ShortenConfigTests {
     }
 
     @Test
-    fun `test ShortenConfig with custom shorturl`() {
+    fun `ShortenConfig with custom shorturl`() {
         val config = ShortenConfig.Builder("https://example.com")
             .shorturl("https://short.url/cust")
             .build()
@@ -64,7 +64,7 @@ class ShortenConfigTests {
     }
 
     @Test
-    fun `test ShortenConfig with custom callback`() {
+    fun `ShortenConfig with custom callback`() {
         val config = ShortenConfig.Builder("https://example.com")
             .callback("myCallbackFunction")
             .build()
@@ -78,7 +78,7 @@ class ShortenConfigTests {
     }
 
     @Test
-    fun `test ShortenConfig with logstats enabled`() {
+    fun `ShortenConfig with logstats enabled`() {
         val config = ShortenConfig.Builder("https://example.com")
             .logstats(true)
             .build()
@@ -92,7 +92,7 @@ class ShortenConfigTests {
     }
 
     @Test
-    fun `test ShortenConfig with custom format`() {
+    fun `ShortenConfig with custom format`() {
         val config = ShortenConfig.Builder("https://example.com")
             .format(Format.SIMPLE)
             .build()
@@ -106,7 +106,7 @@ class ShortenConfigTests {
     }
 
     @Test
-    fun `test ShortenConfig with isVgd enabled`() {
+    fun `ShortenConfig with isVgd enabled`() {
         val config = ShortenConfig.Builder("https://example.com")
             .isVgd(true)
             .build()
@@ -120,7 +120,7 @@ class ShortenConfigTests {
     }
 
     @Test
-    fun `test ShortenConfig with multiple custom values`() {
+    fun `ShortenConfig with multiple custom values`() {
         val config = ShortenConfig.Builder("https://example.com")
             .shorturl("https://short.url/multi")
             .callback("multiCallback")

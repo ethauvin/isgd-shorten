@@ -32,6 +32,7 @@
 package net.thauvin.erik.isgd
 
 import assertk.assertThat
+import assertk.assertAll
 import assertk.assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -51,24 +52,30 @@ class IsgdTests {
             val config = LookupConfig.Builder("foo")
 
             // Defaults
-            assertThat(config.shorturl).isEqualTo("foo")
-            assertThat(config.format).isEqualTo(Format.SIMPLE)
-            assertThat(config.callback).isEmpty()
-            assertThat(config.isVgd).isFalse()
+            assertAll {
+                assertThat(config.shorturl).isEqualTo("foo")
+                assertThat(config.format).isEqualTo(Format.SIMPLE)
+                assertThat(config.callback).isEmpty()
+                assertThat(config.isVgd).isFalse()
+            }
 
             config.format(Format.JSON)
                 .callback("callback")
                 .isVgd(true)
 
-            assertThat(config.shorturl).isEqualTo("foo")
-            assertThat(config.format).isEqualTo(Format.JSON)
-            assertThat(config.callback).isEqualTo("callback")
-            assertThat(config.isVgd).isTrue()
+            assertAll {
+                assertThat(config.shorturl).isEqualTo("foo")
+                assertThat(config.format).isEqualTo(Format.JSON)
+                assertThat(config.callback).isEqualTo("callback")
+                assertThat(config.isVgd).isTrue()
+            }
 
             config.shorturl(shortUrl).isVgd(false)
 
-            assertThat(config.shorturl).isEqualTo(shortUrl)
-            assertThat(config.isVgd).isFalse()
+            assertAll {
+                assertThat(config.shorturl).isEqualTo(shortUrl)
+                assertThat(config.isVgd).isFalse()
+            }
         }
 
         @Test
@@ -76,12 +83,14 @@ class IsgdTests {
             val config = ShortenConfig.Builder("foo")
 
             // Defaults
-            assertThat(config.format).isEqualTo(Format.SIMPLE)
-            assertThat(config.callback).isEmpty()
-            assertThat(config.isVgd).isFalse()
-            assertThat(config.logstats).isFalse()
-            assertThat(config.shorturl).isEmpty()
-            assertThat(config.url).isEqualTo("foo")
+            assertAll {
+                assertThat(config.format).isEqualTo(Format.SIMPLE)
+                assertThat(config.callback).isEmpty()
+                assertThat(config.isVgd).isFalse()
+                assertThat(config.logstats).isFalse()
+                assertThat(config.shorturl).isEmpty()
+                assertThat(config.url).isEqualTo("foo")
+            }
 
 
             config.format(Format.JSON)
@@ -89,21 +98,25 @@ class IsgdTests {
                 .isVgd(true)
                 .logstats(true)
 
-            assertThat(config.format).isEqualTo(Format.JSON)
-            assertThat(config.callback).isEqualTo("callback")
-            assertThat(config.isVgd).isTrue()
-            assertThat(config.logstats).isTrue()
-            assertThat(config.url).isEqualTo("foo")
+            assertAll {
+                assertThat(config.format).isEqualTo(Format.JSON)
+                assertThat(config.callback).isEqualTo("callback")
+                assertThat(config.isVgd).isTrue()
+                assertThat(config.logstats).isTrue()
+                assertThat(config.url).isEqualTo("foo")
+            }
 
             config.shorturl(shortUrl)
                 .isVgd(false)
                 .logstats(false)
                 .url(url)
 
-            assertThat(config.shorturl).isEqualTo(shortUrl)
-            assertThat(config.isVgd).isFalse()
-            assertThat(config.logstats).isFalse()
-            assertThat(config.url).isEqualTo(url)
+            assertAll {
+                assertThat(config.shorturl).isEqualTo(shortUrl)
+                assertThat(config.isVgd).isFalse()
+                assertThat(config.logstats).isFalse()
+                assertThat(config.url).isEqualTo(url)
+            }
         }
     }
 

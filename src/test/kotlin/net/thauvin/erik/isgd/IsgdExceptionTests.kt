@@ -37,6 +37,10 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isNotNull
 import assertk.assertions.prop
 import assertk.assertions.startsWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.EmptySource
+import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
@@ -70,48 +74,57 @@ class IsgdExceptionTests {
         )
     }
 
-    @Test
-    fun `Lookup empty string`() {
+    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @EmptySource
+    @ValueSource(strings = [" ", "  "])
+    fun `Lookup empty string`(input: String) {
         assertFailsWith(
             message = "lookup(empty)",
             exceptionClass = IllegalArgumentException::class,
-            block = { Isgd.lookup("") }
+            block = { Isgd.lookup(input) }
         )
     }
 
-    @Test
-    fun `Lookup empty string with config`() {
+    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @EmptySource
+    @ValueSource(strings = [" ", "  "])
+    fun `Lookup empty string with config`(input: String) {
         assertFailsWith(
             message = "lookup(config:empty)",
             exceptionClass = IllegalArgumentException::class,
-            block = { Isgd.lookup(LookupConfig.Builder("").build()) }
+            block = { Isgd.lookup(LookupConfig.Builder(input).build()) }
         )
     }
 
-    @Test
-    fun `Shorten empty string`() {
+    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @EmptySource
+    @ValueSource(strings = [" ", "  "])
+    fun `Shorten empty string`(input: String) {
         assertFailsWith(
             message = "shorten(empty)",
             exceptionClass = IllegalArgumentException::class,
-            block = { Isgd.shorten("") }
+            block = { Isgd.shorten(input) }
         )
     }
 
-    @Test
-    fun `Shorten empty string with config`() {
+    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @EmptySource
+    @ValueSource(strings = [" ", "  "])
+    fun `Shorten empty string with config`(input: String) {
         assertFailsWith(
             message = "shorten(config:empty)",
             exceptionClass = IllegalArgumentException::class,
-            block = { Isgd.shorten(ShortenConfig.Builder("").build()) }
+            block = { Isgd.shorten(ShortenConfig.Builder(input).build()) }
         )
     }
 
-    @Test
-    fun `Verify exception with status code and message`() {
-        val exception = IsgdException(404, "Not Found")
+    @ParameterizedTest
+    @CsvSource("404, Not Found", "400, Bad Request", "500, Internal Server Error")
+    fun `Verify exception with status code and message`(code: Int, message: String) {
+        val exception = IsgdException(code, message)
         assertThat(exception).all {
-            prop(IsgdException::statusCode).isEqualTo(404)
-            prop(IsgdException::message).isNotNull().isEqualTo("Not Found")
+            prop(IsgdException::statusCode).isEqualTo(code)
+            prop(IsgdException::message).isNotNull().isEqualTo(message)
         }
     }
 }

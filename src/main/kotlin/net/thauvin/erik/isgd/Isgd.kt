@@ -119,11 +119,11 @@ class Isgd private constructor() {
             format: Format = Format.SIMPLE,
             isVgd: Boolean = false
         ): String {
-            require(shorturl.isNotEmpty()) { "Please specify a valid short URL to lookup." }
+            require(shorturl.isNotBlank()) { "Please specify a valid short URL to lookup." }
 
             val sb = StringBuilder("https://${getHost(isVgd)}/forward.php?shorturl=${shorturl.encode()}")
 
-            if (callback.isNotEmpty()) {
+            if (callback.isNotBlank()) {
                 sb.append("&callback=${callback.encode()}")
             }
 
@@ -186,15 +186,15 @@ class Isgd private constructor() {
             format: Format = Format.SIMPLE,
             isVgd: Boolean = false
         ): String {
-            require(url.isNotEmpty()) { "Please enter a valid URL to shorten." }
+            require(url.isNotBlank()) { "Please enter a valid URL to shorten." }
 
             val sb = StringBuilder("https://${getHost(isVgd)}/create.php?url=${url.encode()}")
 
-            if (shorturl.isNotEmpty()) {
+            if (shorturl.isNotBlank()) {
                 sb.append("&shorturl=${shorturl.encode()}")
             }
 
-            if (callback.isNotEmpty()) {
+            if (callback.isNotBlank()) {
                 sb.append("&callback=${callback.encode()}")
             }
 
