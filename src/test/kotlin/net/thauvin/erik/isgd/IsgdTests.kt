@@ -31,8 +31,8 @@
 
 package net.thauvin.erik.isgd
 
-import assertk.assertThat
 import assertk.assertAll
+import assertk.assertThat
 import assertk.assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

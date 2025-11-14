@@ -51,7 +51,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static rife.bld.dependencies.Repository.*;
-import static rife.bld.dependencies.Scope.*;
+import static rife.bld.dependencies.Scope.compile;
+import static rife.bld.dependencies.Scope.test;
 
 public class IsgdShortenBuild extends Project {
     static final String TEST_RESULTS_DIR = "build/test-results/test/";
@@ -69,7 +70,7 @@ public class IsgdShortenBuild extends Project {
 
         repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL);
 
-        final var kotlin = version(2, 2, 20);
+        final var kotlin = version(2, 2, 21);
         var junit = version(6, 0, 1);
         scope(compile)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
@@ -154,6 +155,12 @@ public class IsgdShortenBuild extends Project {
         pomRoot();
     }
 
+    @BuildCommand(value = "pom-root", summary = "Generates the POM file in the root directory")
+    public void pomRoot() throws FileUtilsErrorException {
+        PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
+                new File("pom.xml"));
+    }
+
     public static void main(String[] args) {
         // Enable detailed logging for the extensions
         var level = Level.ALL;
@@ -192,12 +199,6 @@ public class IsgdShortenBuild extends Project {
         op.execute();
     }
 
-    @BuildCommand(value = "pom-root", summary = "Generates the POM file in the root directory")
-    public void pomRoot() throws FileUtilsErrorException {
-        PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
-                new File("pom.xml"));
-    }
-
     @BuildCommand(summary = "Runs the JUnit reporter")
     public void reporter() throws Exception {
         new JUnitReporterOperation()
@@ -206,46 +207,12 @@ public class IsgdShortenBuild extends Project {
                 .execute();
     }
 
-    @Override
-    public void test() throws Exception {
-        var op = testOperation().fromProject(this);
-        op.testToolOptions().reportsDir(new File(TEST_RESULTS_DIR));
-
-        Exception ex = null;
-        try {
-            op.execute();
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        renderWithXunitViewer();
-
-        if (ex != null) {
-            throw ex;
-        }
-    }
-
-    @Override
-    public void javadoc() throws ExitStatusException, IOException, InterruptedException {
-        new DokkaOperation()
+    @BuildCommand(summary = "Runs SpotBugs on this project")
+    public void spotbugs() throws Exception {
+        new SpotBugsOperation()
                 .fromProject(this)
-                .loggingLevel(LoggingLevel.INFO)
-                .moduleName("is.gd Shorten")
-                .moduleVersion(version.toString())
-                .outputDir(new File(buildDirectory(), "javadoc"))
-                .outputFormat(OutputFormat.JAVADOC)
+                .home("/opt/spotbugs")
+                .sourcePath(new File(srcMainDirectory(), "kotlin"))
                 .execute();
-    }
-
-    @Override
-    public void publish() throws Exception {
-        super.publish();
-        pomRoot();
-    }
-
-    @Override
-    public void publishLocal() throws Exception {
-        super.publishLocal();
-        pomRoot();
     }
 }

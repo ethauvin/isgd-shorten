@@ -6,6 +6,7 @@
     <pattern value="net.thauvin.erik.IsgdShortenBuild" />
     <pattern value="net.thauvin.erik.IsgdShortenBuild" method="jacoco" />
     <pattern value="net.thauvin.erik.IsgdShortenBuild" method="reporter" />
+    <pattern value="net.thauvin.erik.IsgdShortenBuild" method="spotbugs" />
   </component>
   <component name="PDMPlugin">
     <option name="customRuleSets">
