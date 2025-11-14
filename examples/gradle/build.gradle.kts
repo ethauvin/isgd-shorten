@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("application")
     id("com.github.ben-manes.versions") version "0.51.0"
-    kotlin("jvm") version "2.2.20"
+    kotlin("jvm") version "2.2.21"
 }
 
 repositories {
@@ -23,10 +23,6 @@ java {
 
 application {
     mainClass.set("com.example.IsgdExampleKt")
-}
-
-kotlin {
-    compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
 }
 
 tasks {
