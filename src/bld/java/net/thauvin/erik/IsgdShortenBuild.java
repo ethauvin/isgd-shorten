@@ -65,7 +65,7 @@ public class IsgdShortenBuild extends Project {
         name = "isgd-shorten";
         version = version(1, 1, 1, "SNAPSHOT");
 
-        javaRelease = 11;
+        javaRelease = 17;
 
         autoDownloadPurge = true;
         downloadSources = true;

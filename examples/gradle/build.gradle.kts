@@ -16,10 +16,6 @@ dependencies {
     implementation("net.thauvin.erik:isgd-shorten:1.1.1-SNAPSHOT")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
 
 application {
     mainClass.set("com.example.IsgdExampleKt")
