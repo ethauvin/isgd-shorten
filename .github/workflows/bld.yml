@@ -57,19 +57,19 @@ jobs:
         run: ./bld compile
 
       - name: Run tests
-        continue-on-error: true
+        id: tests
         run: ./bld jacoco
 
       - name: Run reporter
-        if: ${{ failure() }}
-        run: ./bld reporter -all
+        if: always() && steps.tests.outcome == 'failure'
+        run: ./bld reporter --all
 
       - name: Remove pom.xml
         if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
         run: rm -rf pom.xml
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@v5.3.1
+        uses: SonarSource/sonarqube-scan-action@v6.0.0
         if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

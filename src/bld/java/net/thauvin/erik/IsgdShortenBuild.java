@@ -45,16 +45,13 @@ import rife.tools.exceptions.FileUtilsErrorException;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static rife.bld.dependencies.Repository.*;
-import static rife.bld.dependencies.Scope.compile;
-import static rife.bld.dependencies.Scope.test;
+import static rife.bld.dependencies.Scope.*;
 
 public class IsgdShortenBuild extends Project {
     static final String TEST_RESULTS_DIR = "build/test-results/test/";
@@ -118,6 +115,45 @@ public class IsgdShortenBuild extends Project {
         jarSourcesOperation().sourceDirectories(srcMainKotlin);
     }
 
+    @BuildCommand(summary = "Compiles the Kotlin project")
+    @Override
+    public void compile() throws Exception {
+        var op = new CompileKotlinOperation().fromProject(this);
+        op.compileOptions().languageVersion("1.9").verbose(true);
+        op.execute();
+    }
+
+    @Override
+    public void test() throws Exception {
+        var op = testOperation().fromProject(this);
+        op.testToolOptions().reportsDir(new File(TEST_RESULTS_DIR));
+        op.execute();
+    }
+
+    @Override
+    public void javadoc() throws ExitStatusException, IOException, InterruptedException {
+        new DokkaOperation()
+                .fromProject(this)
+                .loggingLevel(LoggingLevel.INFO)
+                .moduleName("is.gd Shorten")
+                .moduleVersion(version.toString())
+                .outputDir(new File(buildDirectory(), "javadoc"))
+                .outputFormat(OutputFormat.JAVADOC)
+                .execute();
+    }
+
+    @Override
+    public void publish() throws Exception {
+        super.publish();
+        pomRoot();
+    }
+
+    @Override
+    public void publishLocal() throws Exception {
+        super.publishLocal();
+        pomRoot();
+    }
+
     public static void main(String[] args) {
         // Enable detailed logging for the extensions
         var level = Level.ALL;
@@ -130,14 +166,6 @@ public class IsgdShortenBuild extends Project {
         logger.setUseParentHandlers(false);
 
         new IsgdShortenBuild().start(args);
-    }
-
-    @BuildCommand(summary = "Compiles the Kotlin project")
-    @Override
-    public void compile() throws Exception {
-        var op = new CompileKotlinOperation().fromProject(this);
-        op.compileOptions().languageVersion("1.9").verbose(true);
-        op.execute();
     }
 
     @BuildCommand(summary = "Checks source with Detekt")
@@ -161,42 +189,13 @@ public class IsgdShortenBuild extends Project {
     public void jacoco() throws Exception {
         var op = new JacocoReportOperation().fromProject(this);
         op.testToolOptions("--reports-dir=" + TEST_RESULTS_DIR);
-
-        Exception ex = null;
-        try {
-            op.execute();
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        renderWithXunitViewer();
-
-        if (ex != null) {
-            throw ex;
-        }
+        op.execute();
     }
 
     @BuildCommand(value = "pom-root", summary = "Generates the POM file in the root directory")
     public void pomRoot() throws FileUtilsErrorException {
         PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
-                new File(workDirectory, "pom.xml"));
-    }
-
-    private void renderWithXunitViewer() throws Exception {
-        var npmPackagesEnv = System.getenv("NPM_PACKAGES");
-        if (npmPackagesEnv != null && !npmPackagesEnv.isEmpty()) {
-            var xunitViewer = Path.of(npmPackagesEnv, "bin", "xunit-viewer").toFile();
-            if (xunitViewer.exists() && xunitViewer.canExecute()) {
-                var reportsDir = "build/reports/tests/test/";
-
-                Files.createDirectories(Path.of(reportsDir));
-
-                new ExecOperation()
-                        .fromProject(this)
-                        .command(xunitViewer.getPath(), "-r", TEST_RESULTS_DIR, "-o", reportsDir + "index.html")
-                        .execute();
-            }
-        }
+                new File("pom.xml"));
     }
 
     @BuildCommand(summary = "Runs the JUnit reporter")
