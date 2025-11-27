@@ -31,6 +31,7 @@
 
 package net.thauvin.erik.isgd
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import java.net.HttpURLConnection
 import java.net.URI
@@ -52,6 +53,7 @@ fun String.encode(): String = UrlEncoderUtil.encode(this)
  */
 class Isgd private constructor() {
     companion object {
+        @SuppressFBWarnings("URLCONNECTION_SSRF_FD")
         private fun callApi(url: String): String {
             val connection = URI(url).toURL().openConnection() as HttpURLConnection
             try {
