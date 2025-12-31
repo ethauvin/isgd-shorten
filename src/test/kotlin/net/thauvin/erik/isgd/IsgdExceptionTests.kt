@@ -74,7 +74,7 @@ class IsgdExceptionTests {
         )
     }
 
-    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @ParameterizedTest
     @EmptySource
     @ValueSource(strings = [" ", "  "])
     fun `Lookup empty string`(input: String) {
@@ -85,7 +85,7 @@ class IsgdExceptionTests {
         )
     }
 
-    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @ParameterizedTest
     @EmptySource
     @ValueSource(strings = [" ", "  "])
     fun `Lookup empty string with config`(input: String) {
@@ -96,7 +96,7 @@ class IsgdExceptionTests {
         )
     }
 
-    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @ParameterizedTest
     @EmptySource
     @ValueSource(strings = [" ", "  "])
     fun `Shorten empty string`(input: String) {
@@ -107,7 +107,7 @@ class IsgdExceptionTests {
         )
     }
 
-    @ParameterizedTest(name = "[{index}] ''{0}''")
+    @ParameterizedTest
     @EmptySource
     @ValueSource(strings = [" ", "  "])
     fun `Shorten empty string with config`(input: String) {
