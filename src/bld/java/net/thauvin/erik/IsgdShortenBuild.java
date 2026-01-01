@@ -1,7 +1,7 @@
 /*
  * IsgdShortenBuild.java
  *
- * Copyright 2020-2025 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2020-2026 Erik C. Thauvin (erik@thauvin.net)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -118,6 +118,20 @@ public class IsgdShortenBuild extends Project {
         jarSourcesOperation().sourceDirectories(srcMainKotlin);
     }
 
+    public static void main(String[] args) {
+        // Enable detailed logging for the extensions
+        var level = Level.ALL;
+        var logger = Logger.getLogger("rife.bld.extension");
+        var consoleHandler = new ConsoleHandler();
+
+        consoleHandler.setLevel(level);
+        logger.addHandler(consoleHandler);
+        logger.setLevel(level);
+        logger.setUseParentHandlers(false);
+
+        new IsgdShortenBuild().start(args);
+    }
+
     @BuildCommand(summary = "Compiles the Kotlin project")
     @Override
     public void compile() throws Exception {
@@ -161,20 +175,6 @@ public class IsgdShortenBuild extends Project {
     public void pomRoot() throws FileUtilsErrorException {
         PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
                 new File("pom.xml"));
-    }
-
-    public static void main(String[] args) {
-        // Enable detailed logging for the extensions
-        var level = Level.ALL;
-        var logger = Logger.getLogger("rife.bld.extension");
-        var consoleHandler = new ConsoleHandler();
-
-        consoleHandler.setLevel(level);
-        logger.addHandler(consoleHandler);
-        logger.setLevel(level);
-        logger.setUseParentHandlers(false);
-
-        new IsgdShortenBuild().start(args);
     }
 
     @BuildCommand(summary = "Checks source with Detekt")
