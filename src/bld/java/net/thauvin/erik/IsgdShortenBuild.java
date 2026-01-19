@@ -36,6 +36,7 @@ import rife.bld.Project;
 import rife.bld.extension.*;
 import rife.bld.extension.dokka.LoggingLevel;
 import rife.bld.extension.dokka.OutputFormat;
+import rife.bld.extension.tools.IOUtils;
 import rife.bld.operations.exceptions.ExitStatusException;
 import rife.bld.publish.PomBuilder;
 import rife.bld.publish.PublishDeveloper;
@@ -54,8 +55,9 @@ import static rife.bld.dependencies.Repository.*;
 import static rife.bld.dependencies.Scope.*;
 
 public class IsgdShortenBuild extends Project {
-    static final String TEST_RESULTS_DIR = "build/test-results/test/";
+
     final File srcMainKotlin = new File(srcMainDirectory(), "kotlin");
+    final File testResultsDirectory = IOUtils.resolveFile(buildDirectory(), "test-results", "test");
 
     public IsgdShortenBuild() {
         pkg = "net.thauvin.erik";
@@ -118,20 +120,6 @@ public class IsgdShortenBuild extends Project {
         jarSourcesOperation().sourceDirectories(srcMainKotlin);
     }
 
-    public static void main(String[] args) {
-        // Enable detailed logging for the extensions
-        var level = Level.ALL;
-        var logger = Logger.getLogger("rife.bld.extension");
-        var consoleHandler = new ConsoleHandler();
-
-        consoleHandler.setLevel(level);
-        logger.addHandler(consoleHandler);
-        logger.setLevel(level);
-        logger.setUseParentHandlers(false);
-
-        new IsgdShortenBuild().start(args);
-    }
-
     @BuildCommand(summary = "Compiles the Kotlin project")
     @Override
     public void compile() throws Exception {
@@ -143,7 +131,7 @@ public class IsgdShortenBuild extends Project {
     @Override
     public void test() throws Exception {
         var op = testOperation().fromProject(this);
-        op.testToolOptions().reportsDir(new File(TEST_RESULTS_DIR));
+        op.testToolOptions().reportsDir(testResultsDirectory);
         op.execute();
     }
 
@@ -171,10 +159,18 @@ public class IsgdShortenBuild extends Project {
         pomRoot();
     }
 
-    @BuildCommand(value = "pom-root", summary = "Generates the POM file in the root directory")
-    public void pomRoot() throws FileUtilsErrorException {
-        PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
-                new File("pom.xml"));
+    public static void main(String[] args) {
+        // Enable detailed logging for the extensions
+        var level = Level.ALL;
+        var logger = Logger.getLogger("rife.bld.extension");
+        var consoleHandler = new ConsoleHandler();
+
+        consoleHandler.setLevel(level);
+        logger.addHandler(consoleHandler);
+        logger.setLevel(level);
+        logger.setUseParentHandlers(false);
+
+        new IsgdShortenBuild().start(args);
     }
 
     @BuildCommand(summary = "Checks source with Detekt")
@@ -197,8 +193,14 @@ public class IsgdShortenBuild extends Project {
     @BuildCommand(summary = "Generates JaCoCo Reports")
     public void jacoco() throws Exception {
         var op = new JacocoReportOperation().fromProject(this);
-        op.testToolOptions("--reports-dir=" + TEST_RESULTS_DIR);
+        op.testToolOptions("--reports-dir=" + testResultsDirectory.getAbsolutePath());
         op.execute();
+    }
+
+    @BuildCommand(value = "pom-root", summary = "Generates the POM file in the root directory")
+    public void pomRoot() throws FileUtilsErrorException {
+        PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
+                new File("pom.xml"));
     }
 
     @BuildCommand(summary = "Runs the JUnit reporter")
