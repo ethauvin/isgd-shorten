@@ -70,7 +70,7 @@ public class IsgdShortenBuild extends Project {
         repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL);
 
         final var kotlin = version(2, 3, 0);
-        var junit = version(6, 0, 1);
+        var junit = version(6, 0, 2);
         scope(compile)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
                 .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm",
