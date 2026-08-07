@@ -72,14 +72,14 @@ public class IsgdShortenBuild extends Project {
         repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL);
 
         final var kotlin = version(2, 4, 10);
-        var junit = version(6, 1, 2);
+        var junit = version(6, 1, 3);
         scope(compile)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-stdlib", kotlin))
                 .include(dependency("net.thauvin.erik.urlencoder", "urlencoder-lib-jvm",
                         version(1, 6, 0)));
         scope(provided)
                 .include(dependency("com.github.spotbugs", "spotbugs-annotations",
-                        version(4, 9, 8)));
+                        version(4, 10, 3)));
         scope(test)
                 .include(dependency("org.jetbrains.kotlin", "kotlin-test-junit5", kotlin))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", junit))
