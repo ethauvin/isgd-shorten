@@ -124,7 +124,7 @@ public class IsgdShortenBuild extends Project {
     @Override
     public void compile() throws Exception {
         var op = new CompileKotlinOperation().fromProject(this);
-        op.compileOptions().languageVersion("1.9").verbose(true);
+        op.compileOptions().languageVersion("2.2").verbose(true);
         op.execute();
     }
 
