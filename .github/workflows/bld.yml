@@ -45,7 +45,7 @@ jobs:
       - name: Compile and run examples [bld example]
         working-directory: examples/bld
         run: |
-          ./bld -auto-download-purge clean compile
+          ./bld --auto-download-purge clean compile
           ./bld run --args='https://www.example.com https://is.gd/Pt2sET'
           ./bld run-java --args='https://www.example.com https://is.gd/Pt2sET'
 
