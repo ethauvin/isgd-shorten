@@ -36,6 +36,7 @@ import assertk.assertThat
 import assertk.assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
+import rife.bld.testing.CouldFail
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -475,6 +476,7 @@ class IsgdTests {
         }
 
         @Test
+        @CouldFail
         fun `Shorten URL as vgd`() {
             assertEquals(shortVgdUrl, Isgd.shorten(url, isVgd = true), "shorten(isVgd)")
             assertThat(
@@ -502,6 +504,7 @@ class IsgdTests {
         }
 
         @Test
+        @CouldFail
         fun `Shorten URL with config and log stats`() {
             assertThat(
                 Isgd.shorten(

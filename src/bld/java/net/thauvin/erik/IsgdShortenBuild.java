@@ -69,7 +69,7 @@ public class IsgdShortenBuild extends Project {
         autoDownloadPurge = true;
         downloadSources = true;
 
-        repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL);
+        repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL, RIFE2_RELEASES);
 
         final var kotlin = version(2, 4, 20);
         var junit = version(6, 1, 3);
@@ -81,6 +81,8 @@ public class IsgdShortenBuild extends Project {
                 .include(dependency("com.github.spotbugs", "spotbugs-annotations",
                         version(4, 10, 4)));
         scope(test)
+                .include(dependency("com.uwyn.rife2", "bld-testing-helpers",
+                        version(1, 1, 1)))
                 .include(dependency("org.jetbrains.kotlin", "kotlin-test-junit5", kotlin))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", junit))
                 .include(dependency("org.junit.platform", "junit-platform-console-standalone", junit))
